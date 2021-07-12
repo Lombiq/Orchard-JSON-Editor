@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "scripts": {
+    "dotnet-prebuild": "gulp"
+  },
+  "dependencies": {
+    "jsoneditor": "9.5.0"
+  }
+}

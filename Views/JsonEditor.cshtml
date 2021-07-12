@@ -1,0 +1,65 @@
+@{
+    var json = Model.Content switch
+    {
+        JToken jToken => jToken,
+        {} someObject => JToken.FromObject(someObject),
+        null when Model.SerializedJson?.ToString() is string jsonString && !string.IsNullOrWhiteSpace(jsonString) =>
+            JToken.Parse(jsonString),
+        _ => new JObject(),
+    };
+    var options = Model.Options as JsonEditorOptions ?? new JsonEditorOptions();
+    var name = Model.InputName?.ToString() as string;
+
+    const string blockName = "jsonEditor";
+    const string editorName = blockName + "__editor";
+    const string inputName = blockName + "__input";
+
+    if (string.IsNullOrWhiteSpace(name)) { name = blockName; }
+
+    var uniqueGuid = Guid.NewGuid();
+    var editorId = $"{editorName}_{uniqueGuid:N}";
+    var inputId = $"{inputName}_{uniqueGuid:N}";
+
+    var camelCase = new JsonSerializerSettings
+    {
+        ContractResolver = new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy() },
+        Formatting = Formatting.Indented,
+    };
+}
+<div id="@editorId" class="@editorName"></div>
+<input id="@inputId" class="@inputName" name="@name" type="hidden"/>
+
+<style asp-name="@ResourceNames.Library"></style>
+<script asp-name="@ResourceNames.Library" at="Foot"></script>
+
+<script at="Foot" depends-on="jQuery,@ResourceNames.Library">
+    jQuery(function ($) {
+        var $editor = $('#@editorId');
+        var $input = $('#@inputId');
+
+        var options = @Json.Serialize(options, camelCase);
+
+        options.onChange = function () {
+            try {
+                $input.val(JSON.stringify(editor.get(), null, 2));
+
+                $input.attr('data-error', 'false');
+                $input.attr('data-error-text', null);
+            }
+            catch (error)
+            {
+                $input.attr('data-error', 'true');
+                $input.attr('data-error-text', error);
+                $input.trigger('error');
+            }
+
+            $input.trigger('change');
+        };
+
+        var editor = new JSONEditor($editor[0], options);
+        var json = @Html.Raw(json.ToString());
+
+        editor.set(json);
+        options.onChange();
+    });
+</script>
