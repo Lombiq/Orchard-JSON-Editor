@@ -1,5 +1,6 @@
 using Lombiq.JsonEditor.TagHelpers;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using OrchardCore.Modules;
 using OrchardCore.ResourceManagement;
 
@@ -9,7 +10,7 @@ namespace Lombiq.JsonEditor
     {
         public override void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IResourceManifestProvider, ResourceManifest>();
+            services.AddTransient<IConfigureOptions<ResourceManagementOptions>, ResourceManagementOptionsConfiguration>();
             services.AddTagHelpers<JsonEditorTagHelper>();
         }
     }
