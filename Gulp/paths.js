@@ -1,3 +1,5 @@
+const assetsBasePath = './Assets/';
+const stylesBasePath = assetsBasePath + 'Styles/';
 const nodeModulesBasePath = './node_modules/';
 const distBasePath = './wwwroot/';
 
@@ -8,8 +10,12 @@ module.exports = {
             path: nodeModulesBasePath + 'jsoneditor/dist/**',
         },
     ],
+    styles: {
+        base: stylesBasePath,
+        all: stylesBasePath + '**/*.scss',
+    },
     dist: {
         vendors: distBasePath + 'vendors/',
-        lombiq: distBasePath + 'lombiq/',
+        css: distBasePath + 'css/',
     },
 };

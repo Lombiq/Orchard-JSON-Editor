@@ -31,4 +31,8 @@
     <ProjectReference Include="..\..\Utilities\Lombiq.Npm.Targets\Lombiq.Npm.Targets.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="Assets\Styles\json-editor.scss" />
+  </ItemGroup>
+
 </Project>
