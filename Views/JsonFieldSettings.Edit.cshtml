@@ -1,24 +1,9 @@
 @model Lombiq.JsonEditor.Settings.JsonFieldSettings
 
 @{
-    var json = Model.JsonEditorOptions;
-    if (string.IsNullOrEmpty(json))
-    {
-        var options = new JsonEditorOptions
-        {
-            Templates = new[]
-            {
-                new JsonEditorTemplate
-                {
-                    Field = "A technical name that has to be unique.",
-                    Text = "The template's name in the dropdown.",
-                    Title = "The tooltip text. These templates are in the context menu's Append section while in Tree mode.",
-                    Value = new { YourObject = "goes here" },
-                },
-            },
-        };
-        json = JsonConvert.SerializeObject(options);
-    }
+    var json = string.IsNullOrEmpty(Model.JsonEditorOptions)
+        ? JsonConvert.SerializeObject(JsonEditorOptions.GetSample(T))
+        : Model.JsonEditorOptions;
 }
 
 <div class="form-group">
