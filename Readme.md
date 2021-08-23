@@ -9,7 +9,7 @@ Module for displaying a JSON Editor like on [jsoneditoronline.org](https://jsone
 
 ## Documentation
 
-You can use the JSON editor either as a content field by adding a _Json Field_ to your content type, or by invoking "JsonEditor" the shape with the below tag helper:
+You can use the JSON editor either as a content field by adding a _Json Field_ to your content type, or by invoking the "JsonEditor" shape with the below tag helper:
 
 ```html
 <json-editor 

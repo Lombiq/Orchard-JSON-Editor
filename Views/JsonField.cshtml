@@ -6,7 +6,7 @@
     var jObject = JObject.Parse(Model.Value ?? "{}");
 }
 
-@* This exposes the field value to the client Javascript. Re-parsing the JSON into JObject ensures that there is no
+@* This exposes the field value to the client JavaScript. Re-parsing the JSON into JObject ensures that there is no
    dangerous content in there so it's safe to pass the value into Html.Raw(). *@
 <script>
     if (!('JsonField' in window) || !window.JsonField) window.JsonField = {};
