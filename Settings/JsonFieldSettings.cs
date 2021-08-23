@@ -1,6 +1,4 @@
-﻿using Lombiq.JsonEditor.Models;
-
-namespace Lombiq.JsonEditor.Settings
+﻿namespace Lombiq.JsonEditor.Settings
 {
     public class JsonFieldSettings
     {
