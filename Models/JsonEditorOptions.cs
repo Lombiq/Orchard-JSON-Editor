@@ -124,7 +124,7 @@ namespace Lombiq.JsonEditor.Models
                         Field = "aTechnicalNameThatHasToBeUnique",
                         Text = localizer["The template's name in the dropdown."].Value,
                         Title =
-                            localizer["The tooltip text. These templates are in the context menu's Append section while in Tree mode."]
+                            localizer["The tooltip text. These templates are in the context menu's Append and Insert sections while in Tree mode."]
                             .Value,
                         Value = new { YourObject = "goes here" },
                     },
