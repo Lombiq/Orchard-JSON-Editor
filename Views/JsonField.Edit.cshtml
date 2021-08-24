@@ -1,0 +1,18 @@
+@using Lombiq.JsonEditor.Settings
+@using OrchardCore.ContentManagement.Metadata.Models
+@model Lombiq.JsonEditor.ViewModels.EditJsonFieldViewModel
+
+@{
+    var settings = Model.PartFieldDefinition.GetSettings<JsonFieldSettings>();
+    var options = string.IsNullOrWhiteSpace(settings.JsonEditorOptions)
+        ? JsonEditorOptions.GetSample(T)
+        : JsonConvert.DeserializeObject<JsonEditorOptions>(settings.JsonEditorOptions) ?? JsonEditorOptions.GetSample(T);
+}
+
+<div class="form-group">
+    <label>@Model.PartFieldDefinition.DisplayName()</label>
+    <json-editor
+        json="@Model.Value"
+        options="@options"
+        name="@Html.NameFor(model => model.Value)"></json-editor>
+</div>
