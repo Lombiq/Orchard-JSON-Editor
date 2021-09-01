@@ -1,0 +1,10 @@
+.jsonEditor__editor {
+    height: 60vh;
+}
+
+.jsoneditor-contextmenu .jsoneditor-menu {
+    &, & button {
+        // This overrides the default 128px value from the vendor library to make more space for longer template names.
+        width: 200px;
+    }
+}

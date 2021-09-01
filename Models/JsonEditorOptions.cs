@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc.Localization;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -112,5 +113,22 @@ namespace Lombiq.JsonEditor.Models
 #pragma warning disable CA1308 // Normalize strings to uppercase.
             mode.ToString().ToLowerInvariant();
 #pragma warning restore CA1308 // Normalize strings to uppercase.
+
+        public static JsonEditorOptions GetSample(IHtmlLocalizer localizer) =>
+            new()
+            {
+                Templates = new[]
+                {
+                    new JsonEditorTemplate
+                    {
+                        Field = "aTechnicalNameThatHasToBeUnique",
+                        Text = localizer["The template's name in the dropdown."].Value,
+                        Title =
+                            localizer["The tooltip text. These templates are in the context menu's Append and Insert sections while in Tree mode."]
+                            .Value,
+                        Value = new { YourObject = "goes here" },
+                    },
+                },
+            };
     }
 }

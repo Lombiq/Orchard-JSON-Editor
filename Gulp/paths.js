@@ -1,20 +1,21 @@
+const assetsBasePath = './Assets/';
+const stylesBasePath = assetsBasePath + 'Styles/';
 const nodeModulesBasePath = './node_modules/';
 const distBasePath = './wwwroot/';
-const lombiqBasePath = './Assets/Scripts/';
 
 module.exports = {
     vendorAssets: [
         {
             name: 'jsoneditor',
             path: nodeModulesBasePath + 'jsoneditor/dist/**',
-        }
+        },
     ],
-    lombiqAssets: {
-        base: lombiqBasePath,
-        all: lombiqBasePath + '**/*.js',
+    styles: {
+        base: stylesBasePath,
+        all: stylesBasePath + '**/*.scss',
     },
     dist: {
         vendors: distBasePath + 'vendors/',
-        lombiq: distBasePath + 'lombiq/',
+        css: distBasePath + 'css/',
     },
 };

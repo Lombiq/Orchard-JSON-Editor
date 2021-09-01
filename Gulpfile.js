@@ -1,8 +1,8 @@
 const gulp = require('gulp');
 const paths = require('./Gulp/paths');
-const jsTargets = require('../../Utilities/Lombiq.Gulp.Extensions/Tasks/js-targets');
+const scssTargets = require('../../Utilities/Lombiq.Gulp.Extensions/Tasks/scss-targets');
 const copyAssets = require('./Gulp/tasks/copy-assets');
 
+gulp.task('build:styles', scssTargets.build(paths.styles.base, paths.dist.css));
 gulp.task('copy:vendor-assets', () => copyAssets(paths.vendorAssets, paths.dist.vendors));
-gulp.task('build:lombiq-js', () => jsTargets.compile(paths.lombiqAssets.base, paths.dist.lombiq));
-gulp.task('default', gulp.parallel('copy:vendor-assets', 'build:lombiq-js'));
+gulp.task('default', gulp.parallel('build:styles', 'copy:vendor-assets'));

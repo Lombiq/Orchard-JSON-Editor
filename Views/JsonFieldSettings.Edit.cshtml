@@ -1,0 +1,11 @@
+@model Lombiq.JsonEditor.Settings.JsonFieldSettings
+
+@{
+    var json = string.IsNullOrEmpty(Model.JsonEditorOptions)
+        ? JsonConvert.SerializeObject(JsonEditorOptions.GetSample(T))
+        : Model.JsonEditorOptions;
+}
+
+<div class="form-group">
+    <json-editor json="@json" name="@Html.NameFor(model => model.JsonEditorOptions)"></json-editor>
+</div>
