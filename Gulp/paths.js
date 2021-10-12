@@ -9,11 +9,12 @@ module.exports = {
             name: 'jsoneditor',
             path: nodeModulesBasePath + 'jsoneditor/dist/**',
         },
-    styles: {
+    ],
+    styles:
+    {
         base: stylesBasePath,
         all: stylesBasePath + '**/*.scss',
-        },
-    ],
+    },
     dist: {
         vendors: distBasePath + 'vendors/',
         css: distBasePath + 'css/',
