@@ -1,7 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "dotnet-prebuild": "gulp"
+    "dotnet-prebuild": "gulp",
+    "dotnet-postclean": "gulp clean"
   },
   "dependencies": {
     "jsoneditor": "9.5.0"
