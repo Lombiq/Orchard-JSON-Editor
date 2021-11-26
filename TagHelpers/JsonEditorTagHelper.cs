@@ -10,7 +10,7 @@ namespace Lombiq.JsonEditor.TagHelpers
     public class JsonEditorTagHelper : TagHelper
     {
         private readonly IDisplayHelper _displayHelper;
-        private readonly dynamic _shapeFactory;
+        private readonly IShapeFactory _shapeFactory;
 
         [HtmlAttributeName("content")]
         public object Content { get; set; }
@@ -32,7 +32,7 @@ namespace Lombiq.JsonEditor.TagHelpers
 
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
-            var shape = await _shapeFactory.JsonEditor(
+            var shape = await _shapeFactory.New.JsonEditor(
                 Content: Content,
                 SerializedJson: SerializedJson,
                 Options: Options,
