@@ -1,4 +1,4 @@
-﻿using Lombiq.JsonEditor.Fields;
+using Lombiq.JsonEditor.Fields;
 using Lombiq.JsonEditor.Models;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
