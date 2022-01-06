@@ -1,4 +1,4 @@
-﻿using Lombiq.JsonEditor.Fields;
+using Lombiq.JsonEditor.Fields;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Metadata.Models;
 
