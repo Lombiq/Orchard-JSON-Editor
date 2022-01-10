@@ -1,4 +1,4 @@
-# Lombiq JSON Editor
+# Lombiq JSON Editor for Orchard Core
 
 
 
