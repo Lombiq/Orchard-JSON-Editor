@@ -9,7 +9,7 @@
   <PropertyGroup>
     <Title>Lombiq JSON Editor for Orchard Core</Title>
     <Authors>Lombiq Technologies</Authors>
-    <Copyright>Copyright © 2021, Lombiq Technologies Ltd.</Copyright>
+    <Copyright>Copyright © 2021, Lombiq Technologies Ltd. - https://lombiq.com</Copyright>
     <Description>Orchard Core module for displaying a JSON Editor like on (https://jsoneditoronline.org/. See the project website for detailed documentation.</Description>
     <PackageIcon>NuGetIcon.png</PackageIcon>
     <PackageTags>OrchardCore;Lombiq;AspNetCore;JSONEditor</PackageTags>
@@ -51,6 +51,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(NuGetBuild)' == 'True'">
+    <PackageReference Include="Lombiq.HelpfulLibraries" Version="0.0.21" />
     <PackageReference Include="Lombiq.Npm.Targets" Version="0.0.2" />
   </ItemGroup>
 
