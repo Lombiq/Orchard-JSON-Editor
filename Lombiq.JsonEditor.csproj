@@ -14,7 +14,7 @@
     <Title>Lombiq JSON Editor for Orchard Core</Title>
     <Authors>Lombiq Technologies</Authors>
     <Copyright>Copyright © 2021, Lombiq Technologies Ltd. - https://lombiq.com</Copyright>
-    <Description>Orchard Core module for displaying a JSON Editor like on (https://jsoneditoronline.org/. See the project website for detailed documentation.</Description>
+    <Description>Lombiq JSON Editor for Orchard Core: Orchard Core module for displaying a JSON Editor like on (https://jsoneditoronline.org/. See the project website for detailed documentation.</Description>
     <PackageIcon>NuGetIcon.png</PackageIcon>
     <PackageTags>OrchardCore;Lombiq;AspNetCore;JSONEditor</PackageTags>
     <RepositoryUrl>https://github.com/Lombiq/Orchard-JSON-Editor</RepositoryUrl>
