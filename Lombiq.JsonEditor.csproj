@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-    <DefaultItemExcludes>$(DefaultItemExcludes);.git*;node_modules\**;Tests\**</DefaultItemExcludes>
+    <DefaultItemExcludes>$(DefaultItemExcludes);.git*;node_modules\**;Tests\**;Lombiq.Gulp.Extensions\**</DefaultItemExcludes>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -27,6 +27,7 @@
   <ItemGroup>
     <None Remove="node_modules\**" />
     <None Remove="Tests\**" />
+    <None Remove="Lombiq.Gulp.Extensions\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,11 +47,11 @@
 
   <ItemGroup Condition="'$(NuGetBuild)' != 'True'">
     <ProjectReference Include="..\..\Libraries\Lombiq.HelpfulLibraries\Lombiq.HelpfulLibraries\Lombiq.HelpfulLibraries.csproj" />
-    <ProjectReference Include="..\..\Utilities\Lombiq.Gulp.Extensions\Lombiq.Gulp.Extensions.csproj" />
     <ProjectReference Include="..\..\Utilities\Lombiq.Npm.Targets\Lombiq.Npm.Targets.csproj" />
   </ItemGroup>
-
+    
   <ItemGroup Condition="'$(NuGetBuild)' == 'True'">
+    <ProjectReference Include="Lombiq.Gulp.Extensions\Lombiq.Gulp.Extensions.csproj" />
     <PackageReference Include="Lombiq.HelpfulLibraries" Version="0.0.21" />
     <PackageReference Include="Lombiq.Npm.Targets" Version="0.0.2" />
   </ItemGroup>

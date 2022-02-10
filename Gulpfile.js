@@ -1,5 +1,5 @@
 const gulp = require('gulp');
-const recommendedSetup = require('../../Utilities/Lombiq.Gulp.Extensions/recommended-setup');
+const recommendedSetup = require('Lombiq.Gulp.Extensions/recommended-setup');
 
 const assets = [
     {

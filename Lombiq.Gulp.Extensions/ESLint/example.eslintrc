@@ -1,0 +1,10 @@
+// Copy this file to the root directory and modify the path below if necessary.
+
+{
+  "extends": "./src/Utilities/Lombiq.Gulp.Extensions/ESLint/lombiq-base.js",
+
+  "rules": {
+    // Add overriding rules here like this:
+    // "example-rule" : "error"
+  }
+}

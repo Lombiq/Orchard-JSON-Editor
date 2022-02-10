@@ -1,0 +1,31 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Target
+    Name="EslintWarningTarget"
+    AfterTargets="NpmDotnetPrebuild"
+    BeforeTargets="BeforeBuild">
+    <Warning
+      Code="ESL01"
+      Text="ESLint error in Gulp process, check the build output for more information."
+      Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(PrebuildOutput)', 'severity: error'))" />
+    <Warning
+      Code="ESL02"
+      Text="ESLint warning in Gulp process, check the build output for more information."
+      Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(PrebuildOutput)', 'severity: warning'))" />
+  </Target>
+
+  <Target
+    Name="StylelintWarningTarget"
+    AfterTargets="NpmDotnetPrebuild"
+    BeforeTargets="BeforeBuild">
+    <Warning
+      Code="SL01"
+      Text="Stylelint error in Gulp process, check the build output for more information."
+      Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(PrebuildOutput)', 'severity level &quot;error&quot;'))" />
+    <Warning
+      Code="SL02"
+      Text="Stylelint warning in Gulp process, check the build output for more information."
+      Condition="$([System.Text.RegularExpressions.Regex]::IsMatch('$(PrebuildOutput)', 'severity level &quot;warning&quot;'))" />
+  </Target>
+
+</Project>
