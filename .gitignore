@@ -1,4 +1,7 @@
-/node_modules/
-/bin/
-/obj/
-/wwwroot/
+.vs/
+obj/
+bin/
+artifacts/
+node_modules/
+*.user
+.pnpm-debug.log

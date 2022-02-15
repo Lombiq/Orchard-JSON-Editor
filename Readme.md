@@ -2,6 +2,9 @@
 
 
 
+[![Lombiq.JsonEditor NuGet](https://img.shields.io/nuget/v/Lombiq.JsonEditor?label=Lombiq.JsonEditor)](https://www.nuget.org/packages/Lombiq.JsonEditor/)
+
+
 ## About
 
 Orchard Core module for displaying a JSON Editor like on [jsoneditoronline.org](https://jsoneditoronline.org/). Watch a demo video of it from the Orchard Community Meeting [here](https://www.youtube.com/watch?app=desktop&v=nFhRjhXTKAY).
