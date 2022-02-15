@@ -4,7 +4,7 @@ using static Lombiq.JsonEditor.Constants.FeatureIds;
 [assembly: Module(
     Name = "Lombiq JSON Editor",
     Author = "Lombiq Technologies",
-    Version = "1.0",
+    Version = "1.0.0",
     Description = "Module for displaying a JSON Editor like on jsoneditoronline.org.",
     Website = "https://github.com/Lombiq/"
 )]
