@@ -11,8 +11,8 @@ public class JsonEditorOptions
     // Documentation is from: https://github.com/josdejong/jsoneditor/blob/master/docs/api.md#configuration-options
 
     /// <summary>
-    /// Gets or sets a value indicating whether Unicode characters are escaped and displayed as their hexadecimal
-    /// code (like \u260E) instead of of the character itself (like ☎).
+    /// Gets or sets a value indicating whether Unicode characters are escaped and displayed as their hexadecimal code
+    /// (like \u260E) instead of of the character itself (like ☎).
     /// </summary>
     public bool EscapeUnicode { get; set; }
 
@@ -24,8 +24,8 @@ public class JsonEditorOptions
     public bool SortObjectKeys { get; set; }
 
     /// <summary>
-    /// Gets or sets a value indicating whether edit history is enabled. Adds a button Undo and Redo to the menu of
-    /// the JSONEditor. Only applicable when mode is 'tree', 'form', or 'preview'.
+    /// Gets or sets a value indicating whether edit history is enabled. Adds a button Undo and Redo to the menu of the
+    /// JSONEditor. Only applicable when mode is 'tree', 'form', or 'preview'.
     /// </summary>
     public bool History { get; set; } = true;
 
@@ -33,11 +33,10 @@ public class JsonEditorOptions
     private string ModeString { get; set; } = "tree";
 
     /// <summary>
-    /// Gets or sets the editor mode. In 'view' mode, the data and data structure is read-only. In 'form' mode, only
-    /// the value can be changed, the data structure is read-only. Mode 'code' requires the Ace editor to be loaded
-    /// on the page. Mode 'text' shows the data as plain text. The 'preview' mode can handle large JSON documents up
-    /// to 500 MiB. It shows a preview of the data, and allows to transform, sort, filter, format, or compact the
-    /// data.
+    /// Gets or sets the editor mode. In 'view' mode, the data and data structure is read-only. In 'form' mode, only the
+    /// value can be changed, the data structure is read-only. Mode 'code' requires the Ace editor to be loaded on the
+    /// page. Mode 'text' shows the data as plain text. The 'preview' mode can handle large JSON documents up to 500
+    /// MiB. It shows a preview of the data, and allows to transform, sort, filter, format, or compact the data.
     /// </summary>
     [JsonIgnore]
     public JsonEditorMode Mode
@@ -49,15 +48,15 @@ public class JsonEditorOptions
     public IEnumerable<string> Modes { get; set; } = new[] { "tree", "view", "form", "code", "text", "preview" };
 
     /// <summary>
-    /// Gets or sets the JSON Schema to validate against. A JSON schema describes the structure that a JSON object
-    /// must have, like required properties or the type that a value must have.  See http://json-schema.org/ for
-    /// more information.
+    /// Gets or sets the JSON Schema to validate against. A JSON schema describes the structure that a JSON object must
+    /// have, like required properties or the type that a value must have. See http://json-schema.org/ for more
+    /// information.
     /// </summary>
     public object Schema { get; set; }
 
     /// <summary>
-    /// Gets or sets schemas that are referenced using the $ref property from the JSON schema that are set in the
-    /// schema option, the object structure in the form of {reference_key: schemaObject}.
+    /// Gets or sets schemas that are referenced using the $ref property from the JSON schema that are set in the schema
+    /// option, the object structure in the form of {reference_key: schemaObject}.
     /// </summary>
     public object SchemaRefs { get; set; }
 
@@ -79,8 +78,8 @@ public class JsonEditorOptions
     public IEnumerable<JsonEditorTemplate> Templates { get; set; }
 
     /// <summary>
-    /// Gets or sets a value indicating whether sorting of arrays and object properties is enabled. Only applicable
-    /// for mode 'tree'.
+    /// Gets or sets a value indicating whether sorting of arrays and object properties is enabled. Only applicable for
+    /// mode 'tree'.
     /// </summary>
     public bool EnableSort { get; set; } = true;
 
@@ -91,14 +90,14 @@ public class JsonEditorOptions
     public bool EnableTransform { get; set; } = true;
 
     /// <summary>
-    /// Gets or sets the number of children allowed for a given node before the "show more / show all" message
-    /// appears (in 'tree', 'view', or 'form' modes).
+    /// Gets or sets the number of children allowed for a given node before the "show more / show all" message appears
+    /// (in 'tree', 'view', or 'form' modes).
     /// </summary>
     public int MaxVisibleChilds { get; set; } = 100;
 
     /// <summary>
-    /// Gets or sets a value indicating whether main menu bar should be shown. Contains format, sort, transform,
-    /// search etc. functionality.
+    /// Gets or sets a value indicating whether main menu bar should be shown. Contains format, sort, transform, search
+    /// etc. functionality.
     /// </summary>
     public bool MainMenuBar { get; set; } = true;
 

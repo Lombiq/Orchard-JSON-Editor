@@ -7,7 +7,7 @@
 }
 
 @* This exposes the field value to the client JavaScript. Re-parsing the JSON into JObject ensures that there is no
-   dangerous content (such as JS code injection) in there, so it's safe to pass the value into Html.Raw(). *@
+    dangerous content (such as JS code injection) in there, so it's safe to pass the value into Html.Raw(). *@
 <script>
     if (!('JsonField' in window) || !window.JsonField) window.JsonField = {};
     var fieldName = @name.JsonHtmlContent();
