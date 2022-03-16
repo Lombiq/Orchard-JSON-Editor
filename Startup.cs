@@ -10,17 +10,16 @@ using OrchardCore.ContentTypes.Editors;
 using OrchardCore.Modules;
 using OrchardCore.ResourceManagement;
 
-namespace Lombiq.JsonEditor
-{
-    public class Startup : StartupBase
-    {
-        public override void ConfigureServices(IServiceCollection services)
-        {
-            services.AddTransient<IConfigureOptions<ResourceManagementOptions>, ResourceManagementOptionsConfiguration>();
-            services.AddTagHelpers<JsonEditorTagHelper>();
+namespace Lombiq.JsonEditor;
 
-            services.AddContentField<JsonField>().UseDisplayDriver<JsonFieldDisplayDriver>();
-            services.AddScoped<IContentPartFieldDefinitionDisplayDriver, JsonFieldSettingsDriver>();
-        }
+public class Startup : StartupBase
+{
+    public override void ConfigureServices(IServiceCollection services)
+    {
+        services.AddTransient<IConfigureOptions<ResourceManagementOptions>, ResourceManagementOptionsConfiguration>();
+        services.AddTagHelpers<JsonEditorTagHelper>();
+
+        services.AddContentField<JsonField>().UseDisplayDriver<JsonFieldDisplayDriver>();
+        services.AddScoped<IContentPartFieldDefinitionDisplayDriver, JsonFieldSettingsDriver>();
     }
 }

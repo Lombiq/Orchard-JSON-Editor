@@ -1,9 +1,8 @@
 using OrchardCore.ContentManagement;
 
-namespace Lombiq.JsonEditor.Fields
+namespace Lombiq.JsonEditor.Fields;
+
+public class JsonField : ContentField
 {
-    public class JsonField : ContentField
-    {
-        public string Value { get; set; }
-    }
+    public string Value { get; set; }
 }

@@ -1,7 +1,6 @@
-namespace Lombiq.JsonEditor.Settings
+namespace Lombiq.JsonEditor.Settings;
+
+public class JsonFieldSettings
 {
-    public class JsonFieldSettings
-    {
-        public string JsonEditorOptions { get; set; }
-    }
+    public string JsonEditorOptions { get; set; }
 }
