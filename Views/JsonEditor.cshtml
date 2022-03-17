@@ -2,7 +2,7 @@
     var json = Model.Content switch
     {
         JToken jToken => jToken,
-        {} someObject => JToken.FromObject(someObject),
+        { } someObject => JToken.FromObject(someObject),
         null when Model.SerializedJson?.ToString() is string jsonString && !string.IsNullOrWhiteSpace(jsonString) =>
             JToken.Parse(jsonString),
         _ => new JObject(),
@@ -27,7 +27,7 @@
     };
 }
 <div id="@editorId" class="@editorName"></div>
-<input id="@inputId" class="@inputName" name="@name" type="hidden"/>
+<input id="@inputId" class="@inputName" name="@name" type="hidden" />
 
 <style asp-name="@ResourceNames.Library"></style>
 <style asp-name="@ResourceNames.Style"></style>

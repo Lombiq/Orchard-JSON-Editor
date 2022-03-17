@@ -1,12 +1,11 @@
-namespace Lombiq.JsonEditor.Models
+namespace Lombiq.JsonEditor.Models;
+
+public enum JsonEditorMode
 {
-    public enum JsonEditorMode
-    {
-        Tree,
-        View,
-        Form,
-        Code,
-        Text,
-        Preview,
-    }
+    Tree,
+    View,
+    Form,
+    Code,
+    Text,
+    Preview,
 }
