@@ -5,6 +5,6 @@
     "dotnet-postclean": "gulp clean"
   },
   "dependencies": {
-    "jsoneditor": "9.5.0"
+    "jsoneditor": "9.5.6"
   }
 }
