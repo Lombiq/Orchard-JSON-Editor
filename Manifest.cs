@@ -20,7 +20,3 @@ using static Lombiq.JsonEditor.Constants.FeatureIds;
         "OrchardCore.ResourceManagement",
     }
 )]
-
-
-
-
