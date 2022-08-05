@@ -2,6 +2,7 @@
 
 Ehhh, that's quite some files in this dist folder. Which files do I need?
 
+
 ## Full version
 
 If you're not sure which version to use, use the full version.
@@ -12,6 +13,7 @@ Which files are needed when using the full version?
 - jsoneditor.map (optional, for debugging purposes only)
 - jsoneditor.min.css
 - img/jsoneditor-icons.svg
+
 
 ## Minimalist version
 
@@ -39,3 +41,4 @@ Which files are needed when using the minimalist version?
 - jsoneditor-minimalist.map (optional, for debugging purposes only)
 - jsoneditor.min.css
 - img/jsoneditor-icons.svg
+
