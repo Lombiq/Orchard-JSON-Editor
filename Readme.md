@@ -37,6 +37,13 @@ The properties are:
 
 All attributes are optional. If neither content nor json is set, an empty object is taken as the content.
 
+## Dependencies
+
+This module has the following dependencies:
+
+- [Lombiq Helpful Libraries for Orchard Core](https://github.com/Lombiq/Helpful-Libraries)
+- [Lombiq Node.js Extensions](https://gihub.com/Lombiq/NodeJs-Extensions)
+
 ## Contributing and support
 
 Bug reports, feature requests, comments, questions, code contributions and love letters are warmly welcome. You can send them to us via GitHub issues and pull requests. Please adhere to our [open-source guidelines](https://lombiq.com/open-source-guidelines) while doing so.
