@@ -1,4 +1,4 @@
-namespace Lombiq.Privacy.Tests.UI.Constants;
+namespace Lombiq.JsonEditor.Tests.UI.Constants;
 
 public static class ElementSelectors
 {
