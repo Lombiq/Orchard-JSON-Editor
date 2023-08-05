@@ -130,9 +130,10 @@ public static class TestCaseUITestContextExtensions
 
     private static void TestCodeStyleMode(this UITestContext context)
     {
-        // This field is hidden but it's content reflects what's in the editor.
-        var editorContent = JObject.Parse(context.Get(By.XPath($"//input[@class='jsonEditor__input']").OfAnyVisibility())
-        .GetValue());
+        // This field is hidden, but its content reflects what's in the editor.
+        var editorContent = JObject
+            .Parse(context.Get(By.XPath($"//input[@class='jsonEditor__input']").OfAnyVisibility())
+            .GetValue());
 
         ((string)editorContent["printThese"][0]).ShouldBe(HelloValue);
         ((string)editorContent["printThese"][1]).ShouldBe(WorldValue);
