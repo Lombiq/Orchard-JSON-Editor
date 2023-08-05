@@ -16,10 +16,6 @@
     <PackageLicenseFile>License.md</PackageLicenseFile>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Lombiq.JsonEditor\Lombiq.JsonEditor.csproj" />
-  </ItemGroup>
-
   <ItemGroup Condition="'$(NuGetBuild)' != 'true'">
     <ProjectReference Include="..\..\..\..\test\Lombiq.UITestingToolbox\Lombiq.Tests.UI\Lombiq.Tests.UI.csproj" />
   </ItemGroup>

@@ -1,4 +1,3 @@
-using Lombiq.JsonEditor.Constants;
 using Lombiq.Tests.UI.Extensions;
 using Lombiq.Tests.UI.Services;
 using System.Threading.Tasks;
@@ -11,5 +10,5 @@ public static class UITestContextExtensions
         context.ExecuteRecipeDirectlyAsync("Lombiq.JsonEditor.Sample");
 
     public static Task EnableJsonEditorFeatureAsync(this UITestContext context) =>
-        context.EnableFeatureDirectlyAsync(FeatureIds.Default);
+        context.EnableFeatureDirectlyAsync("Lombiq.JsonEditor");
 }
