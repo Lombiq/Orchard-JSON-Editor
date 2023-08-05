@@ -22,7 +22,7 @@ public static class TestCaseUITestContextExtensions
     private static readonly By ArrayCountByXPath = By.XPath($"//div[@class='jsoneditor-value jsoneditor-array' and contains(text(),'[2]')]");
     private static readonly By FieldByXPath = By.XPath($"//div[@class='jsoneditor-field' and contains(text(), '{TestField}')]");
 
-    public static async Task TestJsonEditorSampleBehaviorAsync(this UITestContext context)
+    public static async Task TestJsonEditorBehaviorAsync(this UITestContext context)
     {
         await context.EnableJsonEditorFeatureAsync();
 
