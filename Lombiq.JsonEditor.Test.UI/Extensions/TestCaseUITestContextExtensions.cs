@@ -66,19 +66,12 @@ public static class TestCaseUITestContextExtensions
         context.TestCodeStyleMode();
     }
 
-    private static void CheckValueInTreeMode(this UITestContext context, string arrayValue, bool missing = false)
+    private static void CheckValueInTreeMode(this UITestContext context, string arrayValue, bool exists = true)
     {
         var arrayValueByXPath =
             By.XPath($"//div[@class='jsoneditor-value jsoneditor-string' and contains(text(),'{arrayValue}')]");
 
-        if (!missing)
-        {
-            context.Exists(arrayValueByXPath);
-        }
-        else
-        {
-            context.Missing(arrayValueByXPath);
-        }
+        context.CheckExistence(arrayValueByXPath, exists);
     }
 
     private static Task ClickOnExpandAllAsync(this UITestContext context) =>
@@ -123,9 +116,9 @@ public static class TestCaseUITestContextExtensions
 
         context.Missing(FieldByXPath);
 
-        context.CheckValueInTreeMode(HelloValue, missing: true);
-        context.CheckValueInTreeMode(WorldValue, missing: true);
-        context.CheckValueInTreeMode(TestValue, missing: true);
+        context.CheckValueInTreeMode(HelloValue, exists: false);
+        context.CheckValueInTreeMode(WorldValue, exists: false);
+        context.CheckValueInTreeMode(TestValue, exists: false);
     }
 
     private static void TestCodeStyleMode(this UITestContext context)
