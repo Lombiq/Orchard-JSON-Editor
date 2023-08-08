@@ -15,6 +15,10 @@
         "sources": [ "node_modules/jsoneditor/dist" ],
         "target": "wwwroot/vendors/jsoneditor"
       }
-    ]
+    ],
+    "styles": {
+      "source": "Assets/Styles",
+      "target": "wwwroot/css"
+    }
   }
 }
