@@ -39,7 +39,10 @@ public static class TestCaseUITestContextExtensions
         await context.GoToContentItemEditorByIdAsync(SampleContentItemId);
 
         // Testing if input is saved.
-        context.GetAll(By.XPath($"//button[@class='jsoneditor-button jsoneditor-contextmenu-button']"))[1].Click();
+        await context.ClickReliablyOnAsync(
+            By.XPath($"//tr[contains(@class,'jsoneditor-expandable jsoneditor-collapsed')]" +
+                "/td/button[@class='jsoneditor-button jsoneditor-contextmenu-button']"));
+
         await context.ClickReliablyOnAsync(By.XPath($"//div[contains(text(),'Append')]"));
 
         context.Get(By.XPath($"//div[@class='jsoneditor-field jsoneditor-empty']")).FillInWith(TestField);
