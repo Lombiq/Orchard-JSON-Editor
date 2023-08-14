@@ -1,6 +1,6 @@
 # Lombiq JSON Editor for Orchard Core
 
-[![Lombiq.JsonEditor NuGet](https://img.shields.io/nuget/v/Lombiq.JsonEditor?label=Lombiq.JsonEditor)](https://www.nuget.org/packages/Lombiq.JsonEditor/)
+[![Lombiq.JsonEditor NuGet](https://img.shields.io/nuget/v/Lombiq.JsonEditor?label=Lombiq.JsonEditor)](https://www.nuget.org/packages/Lombiq.JsonEditor/) [![Lombiq.JsonEditor.Tests.UI NuGet](https://img.shields.io/nuget/v/Lombiq.JsonEditor.Tests.UI?label=Lombiq.JsonEditor.Tests.UI)](https://www.nuget.org/packages/Lombiq.JsonEditor.Tests.UI/)
 
 ## About
 
