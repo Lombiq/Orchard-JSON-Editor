@@ -1,0 +1,12 @@
+﻿@model Lombiq.JsonEditor.ViewModels.EditContentItemViewModel
+
+@{
+}
+
+<div class="form-group">
+    <label>@Model.DisplayText</label>
+    <json-editor
+        json="@Model.Json"
+        options="@JsonEditorOptions.GetSample(T)"
+        name="@Html.NameFor(model => model.Json)"></json-editor>
+</div>
