@@ -25,7 +25,7 @@ public class AdminController : Controller
         _session = session;
     }
 
-    public async Task<IActionResult> Edit(string contentItemId)
+    public async Task<IActionResult> Edit(string contentItemId, string returnUrl)
     {
         if (string.IsNullOrWhiteSpace(contentItemId) ||
             await _contentManager.GetAsync(contentItemId, VersionOptions.Latest) is not { } contentItem ||

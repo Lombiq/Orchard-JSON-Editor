@@ -32,6 +32,8 @@ public class Startup : StartupBase
 
         services.AddContentField<JsonField>().UseDisplayDriver<JsonFieldDisplayDriver>();
         services.AddScoped<IContentPartFieldDefinitionDisplayDriver, JsonFieldSettingsDriver>();
+
+        services.AddScoped<IContentDisplayDriver, EditJsonActionsMenuContentDisplayDriver>();
     }
 
     public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider) =>

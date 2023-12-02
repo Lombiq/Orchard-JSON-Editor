@@ -1,0 +1,12 @@
+﻿@using OrchardCore.ContentManagement
+@using OrchardCore
+@using Lombiq.JsonEditor.Controllers
+
+@{
+    var contentItem = (ContentItem)Model.ContentItem;
+    var url = Orchard.Action<AdminController>(controller => controller.Edit(
+        contentItem.ContentItemId,
+        FullRequestPath));
+}
+
+<a href="@url" class="dropdown-item btn-sm">@T["Edit as JSON"]</a>
