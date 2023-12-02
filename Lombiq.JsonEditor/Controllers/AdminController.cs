@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using OrchardCore.Admin;
 using OrchardCore.ContentManagement;
 using OrchardCore.Contents;
 using System.Threading.Tasks;
@@ -10,13 +9,13 @@ using YesSql;
 
 namespace Lombiq.JsonEditor.Controllers;
 
-public class ContentController : Controller
+public class AdminController : Controller
 {
     private readonly IAuthorizationService _authorizationService;
     private readonly IContentManager _contentManager;
     private readonly ISession _session;
 
-    public ContentController(
+    public AdminController(
         IAuthorizationService authorizationService,
         IContentManager contentManager,
         ISession session)
@@ -26,8 +25,6 @@ public class ContentController : Controller
         _session = session;
     }
 
-    [Admin]
-    [Route("/Contents/ContentItems/{contentItemId}/Edit/Json")]
     public async Task<IActionResult> Edit(string contentItemId)
     {
         if (string.IsNullOrWhiteSpace(contentItemId) ||
@@ -40,7 +37,6 @@ public class ContentController : Controller
         return View(new EditContentItemViewModel(contentItem, JsonConvert.SerializeObject(contentItem)));
     }
 
-    [Admin]
     [ValidateAntiForgeryToken]
     [HttpPost, ActionName(nameof(Edit))]
     public async Task<IActionResult> EditPost(string contentItemId, string json)
@@ -58,9 +54,17 @@ public class ContentController : Controller
             return NotFound();
         }
 
+        if (await _contentManager.GetAsync(contentItem.ContentItemId, VersionOptions.Latest) is { } existing)
+        {
+            existing.Latest = false;
+            existing.Published = false;
+            _session.Save(existing);
+            contentItem.ContentItemVersionId = null;
+        }
+
         await _contentManager.PublishAsync(contentItem);
         _session.Save(contentItem);
-        return RedirectToAction(nameof(Edit));
+        return RedirectToAction(nameof(Edit), new { contentItemId });
     }
 
     private Task<bool> CanEditAsync(ContentItem contentItem) =>
