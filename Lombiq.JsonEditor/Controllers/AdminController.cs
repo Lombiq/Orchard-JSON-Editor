@@ -60,7 +60,11 @@ public class AdminController : Controller
 
     [ValidateAntiForgeryToken]
     [HttpPost, ActionName(nameof(Edit))]
-    public async Task<IActionResult> EditPost(string contentItemId, string json)
+    public async Task<IActionResult> EditPost(
+        string contentItemId,
+        string json,
+        string returnUrl,
+        [Bind(Prefix = "submit.Publish")] string submitPublish)
     {
         if (string.IsNullOrWhiteSpace(contentItemId) ||
             string.IsNullOrWhiteSpace(json) ||
@@ -85,7 +89,15 @@ public class AdminController : Controller
 
         await _contentManager.PublishAsync(contentItem);
         _session.Save(contentItem);
-        return RedirectToAction(nameof(Edit), new { contentItemId });
+
+        if (!string.IsNullOrEmpty(returnUrl) &&
+            submitPublish != "submit.PublishAndContinue" &&
+            Url.IsLocalUrl(returnUrl))
+        {
+            return Redirect(returnUrl);
+        }
+
+        return RedirectToAction(nameof(Edit), new { contentItemId, returnUrl });
     }
 
     private Task<bool> CanEditAsync(ContentItem contentItem) =>

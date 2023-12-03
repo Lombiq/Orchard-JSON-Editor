@@ -1,16 +1,24 @@
 ﻿@model Lombiq.JsonEditor.ViewModels.EditContentItemViewModel
+@{
+    var returnUrl = Context.Request.Query["returnUrl"];
+}
 
 <form method="post">
     @Html.AntiForgeryToken()
     <input type="hidden" name="contentItemId" value="@Model.ContentItemId">
+    <input type="hidden" name="returnUrl" value="@returnUrl" />
 
-    <div class="form-group">
-        <label>@Model.DisplayText</label>
+    <div class="form-group mb-3">
         <json-editor
             json="@Model.Json"
             options="@JsonEditorOptions.GetSample(T)"
             name="json"></json-editor>
     </div>
 
-    <button type="submit" class="btn btn-primary">@T["Publish"]</button>
+    <shape type="Content_PublishButton" />
+
+    @if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
+    {
+        <a class="btn btn-secondary cancel" role="button" href="@returnUrl">@T["Cancel"]</a>
+    }
 </form>
