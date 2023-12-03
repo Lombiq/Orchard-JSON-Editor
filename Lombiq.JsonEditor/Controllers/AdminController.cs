@@ -1,9 +1,14 @@
-﻿using Lombiq.JsonEditor.ViewModels;
+﻿using Lombiq.HelpfulLibraries.OrchardCore.Contents;
+using Lombiq.JsonEditor.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using OrchardCore.ContentManagement;
 using OrchardCore.Contents;
+using OrchardCore.DisplayManagement;
+using OrchardCore.DisplayManagement.Layout;
+using OrchardCore.Title.ViewModels;
 using System.Threading.Tasks;
 using YesSql;
 
@@ -13,19 +18,28 @@ public class AdminController : Controller
 {
     private readonly IAuthorizationService _authorizationService;
     private readonly IContentManager _contentManager;
+    private readonly ILayoutAccessor _layoutAccessor;
     private readonly ISession _session;
+    private readonly IShapeFactory _shapeFactory;
+    private readonly IStringLocalizer<AdminController> T;
 
     public AdminController(
         IAuthorizationService authorizationService,
         IContentManager contentManager,
-        ISession session)
+        ILayoutAccessor layoutAccessor,
+        ISession session,
+        IShapeFactory shapeFactory,
+        IStringLocalizer<AdminController> stringLocalizer)
     {
         _authorizationService = authorizationService;
         _contentManager = contentManager;
+        _layoutAccessor = layoutAccessor;
         _session = session;
+        _shapeFactory = shapeFactory;
+        T = stringLocalizer;
     }
 
-    public async Task<IActionResult> Edit(string contentItemId, string returnUrl)
+    public async Task<IActionResult> Edit(string contentItemId)
     {
         if (string.IsNullOrWhiteSpace(contentItemId) ||
             await _contentManager.GetAsync(contentItemId, VersionOptions.Latest) is not { } contentItem ||
@@ -33,6 +47,13 @@ public class AdminController : Controller
         {
             return NotFound();
         }
+
+        var titleShape = await _shapeFactory.CreateAsync<TitlePartViewModel>("TitlePart", model =>
+        {
+            model.Title = T["Edit {0} as JSON", contentItem.ContentType];
+            model.ContentItem = contentItem;
+        });
+        await _layoutAccessor.AddShapeToZoneAsync("Title", titleShape);
 
         return View(new EditContentItemViewModel(contentItem, JsonConvert.SerializeObject(contentItem)));
     }
