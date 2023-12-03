@@ -71,7 +71,9 @@ public static class TestCaseUITestContextExtensions
 
         // Test that content JSON editing works.
         await context.GoToContentItemListAsync();
-        await context.SelectFromBootstrapDropdownReliablyAsync(By.CssSelector(".dropdown-toggle.actions"), "Edit as JSON");
+        await context.SelectFromBootstrapDropdownReliablyAsync(
+            By.CssSelector(".list-group-item:nth-child(3) .dropdown-toggle.actions"),
+            "Edit as JSON");
         context
             .Get(By.XPath("//div[contains(@class, 'jsoneditor-field') and contains(., 'Author')]/../..//div[contains(@class, 'jsoneditor-value')]"))
             .FillInWith(TestAuthor);
