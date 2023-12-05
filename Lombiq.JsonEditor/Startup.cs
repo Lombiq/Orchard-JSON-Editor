@@ -1,3 +1,4 @@
+using Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
 using Lombiq.JsonEditor.Constants;
 using Lombiq.JsonEditor.Controllers;
 using Lombiq.JsonEditor.Drivers;
@@ -38,8 +39,11 @@ public class ContentEditorStartup : StartupBase
 
     public ContentEditorStartup(IOptions<AdminOptions> adminOptions) => _adminOptions = adminOptions.Value;
 
-    public override void ConfigureServices(IServiceCollection services) =>
+    public override void ConfigureServices(IServiceCollection services)
+    {
         services.AddScoped<IContentDisplayDriver, EditJsonActionsMenuContentDisplayDriver>();
+        services.AddOrchardServices();
+    }
 
     public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider) =>
         routes.MapAreaControllerRoute(

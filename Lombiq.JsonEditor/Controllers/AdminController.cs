@@ -1,4 +1,5 @@
 ﻿using Lombiq.HelpfulLibraries.OrchardCore.Contents;
+using Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
 using Lombiq.JsonEditor.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,7 @@ namespace Lombiq.JsonEditor.Controllers;
 public class AdminController : Controller
 {
     private readonly IAuthorizationService _authorizationService;
+    private readonly IContentItemIdGenerator _contentItemIdGenerator;
     private readonly IContentManager _contentManager;
     private readonly ILayoutAccessor _layoutAccessor;
     private readonly IPageTitleBuilder _pageTitleBuilder;
@@ -27,21 +29,20 @@ public class AdminController : Controller
     private readonly IStringLocalizer<AdminController> T;
 
     public AdminController(
-        IAuthorizationService authorizationService,
-        IContentManager contentManager,
+        IContentItemIdGenerator contentItemIdGenerator,
         ILayoutAccessor layoutAccessor,
         IPageTitleBuilder pageTitleBuilder,
-        ISession session,
         IShapeFactory shapeFactory,
-        IStringLocalizer<AdminController> stringLocalizer)
+        IOrchardServices<AdminController> services)
     {
-        _authorizationService = authorizationService;
-        _contentManager = contentManager;
+        _authorizationService = services.AuthorizationService.Value;
+        _contentItemIdGenerator = contentItemIdGenerator;
+        _contentManager = services.ContentManager.Value;
         _layoutAccessor = layoutAccessor;
         _pageTitleBuilder = pageTitleBuilder;
-        _session = session;
+        _session = services.Session.Value;
         _shapeFactory = shapeFactory;
-        T = stringLocalizer;
+        T = services.StringLocalizer.Value;
     }
 
     public async Task<IActionResult> Edit(string contentItemId)
@@ -91,7 +92,7 @@ public class AdminController : Controller
             existing.Latest = false;
             existing.Published = false;
             _session.Save(existing);
-            contentItem.ContentItemVersionId = null;
+            contentItem.ContentItemVersionId = _contentItemIdGenerator.GenerateUniqueId(existing);
         }
 
         contentItem.Published = false;
