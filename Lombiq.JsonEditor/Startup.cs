@@ -31,6 +31,7 @@ public class Startup : StartupBase
     }
 }
 
+[Feature(FeatureIds.ContentEditor)]
 public class ContentEditorStartup : StartupBase
 {
     private readonly AdminOptions _adminOptions;
