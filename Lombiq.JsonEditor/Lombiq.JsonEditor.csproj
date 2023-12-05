@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <None Include="License.md" Pack="true" PackagePath="" />
+    <None Include="..\Readme.md" Link="Readme.md" />
     <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
   </ItemGroup>
 

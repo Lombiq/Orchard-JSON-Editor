@@ -10,6 +10,8 @@ Do you want to quickly try out this project and see it in action? Check it out i
 
 ## Documentation
 
+### JSON editor
+
 You can use the JSON editor either as a content field by adding a _Json Field_ to your content type, or by invoking the "JsonEditor" shape with the below tag helper:
 
 ```html
@@ -36,6 +38,18 @@ The properties are:
 - InputName ("name"): The HTML name of the associated hidden `<input>` element.
 
 All attributes are optional. If neither content nor json is set, an empty object is taken as the content.
+
+### JSON content editor
+
+The module also provides an editor for content items. This can be used to directly edit a content item as JSON data. This tool can be useful to inspect how the content item is serialized in the YesSql database without directly accessing the database or exporting the content item via deployment. It can also be used to edit properties that currently don't have an editor.
+
+When the module is enabled, a new _Edit as JSON_ entry is added to the actions dropdown in the admin dashboard's content item listing:
+![actions menu](Docs/actions-menu.png)
+
+Clicking on it encodes the content item as JSON and displays it in the JSON editor:
+![JSON content editor](Docs/content-editor.png)
+
+This still requires edit permission to the content item, so the security is the same as the regular content item editor. Clicking _Publish_  deserializes the received JSON into a ContentItem and saves it into the database.
 
 ## Dependencies
 
