@@ -54,7 +54,10 @@ public class AdminController : Controller
             return NotFound();
         }
 
-        var title = T["Edit {0} as JSON", contentItem.ContentType].Value;
+        var name = string.IsNullOrWhiteSpace(contentItem.DisplayText)
+            ? contentItem.ContentType
+            : $"\"{contentItem.DisplayText}\"";
+        var title = T["Edit {0} as JSON", name].Value;
         _pageTitleBuilder.AddSegment(new StringHtmlContent(title));
         var titleShape = await _shapeFactory.CreateAsync<TitlePartViewModel>("TitlePart", model =>
         {
