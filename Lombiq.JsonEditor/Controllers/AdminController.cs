@@ -94,8 +94,8 @@ public class AdminController : Controller
             contentItem.ContentItemVersionId = null;
         }
 
+        contentItem.Published = false;
         await _contentManager.PublishAsync(contentItem);
-        _session.Save(contentItem);
 
         if (!string.IsNullOrEmpty(returnUrl) &&
             submitPublish != "submit.PublishAndContinue" &&
