@@ -49,7 +49,7 @@ When the module is enabled, a new _Edit as JSON_ entry is added to the actions d
 Clicking on it encodes the content item as JSON and displays it in the JSON editor:
 ![JSON content editor](Docs/content-editor.png)
 
-This still requires edit permission to the content item, so the security is the same as the regular content item editor. Clicking _Publish_  deserializes the received JSON into a ContentItem and saves it into the database.
+This still requires edit permission to the content item, so the security is the same as the regular content item editor. Clicking _Publish_ deserializes the received JSON into a ContentItem and publishes it.
 
 ## Dependencies
 
