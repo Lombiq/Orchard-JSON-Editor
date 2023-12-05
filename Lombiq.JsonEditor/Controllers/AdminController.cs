@@ -93,7 +93,6 @@ public class AdminController : Controller
         if (await _contentManager.GetAsync(contentItem.ContentItemId, VersionOptions.Latest) is { } existing)
         {
             existing.Latest = false;
-            existing.Published = false;
             _session.Save(existing);
             contentItem.ContentItemVersionId = _contentItemIdGenerator.GenerateUniqueId(existing);
         }
