@@ -19,7 +19,8 @@
       "name": "feature",
       "disable": [],
       "enable": [
-        "Lombiq.JsonEditor"
+        "Lombiq.JsonEditor",
+        "Lombiq.JsonEditor.ContentEditor"
       ]
     },
     {

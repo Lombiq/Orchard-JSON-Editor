@@ -26,6 +26,7 @@ public static class TestCaseUITestContextExtensions
     public static async Task TestJsonEditorBehaviorAsync(this UITestContext context)
     {
         await context.EnableJsonEditorFeatureAsync();
+        await context.EnableJsonContentEditorFeatureAsync();
 
         await context.ExecuteJsonEditorSampleRecipeDirectlyAsync();
 

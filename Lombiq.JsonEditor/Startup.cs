@@ -21,10 +21,6 @@ namespace Lombiq.JsonEditor;
 
 public class Startup : StartupBase
 {
-    private readonly AdminOptions _adminOptions;
-
-    public Startup(IOptions<AdminOptions> adminOptions) => _adminOptions = adminOptions.Value;
-
     public override void ConfigureServices(IServiceCollection services)
     {
         services.AddTransient<IConfigureOptions<ResourceManagementOptions>, ResourceManagementOptionsConfiguration>();
@@ -32,9 +28,17 @@ public class Startup : StartupBase
 
         services.AddContentField<JsonField>().UseDisplayDriver<JsonFieldDisplayDriver>();
         services.AddScoped<IContentPartFieldDefinitionDisplayDriver, JsonFieldSettingsDriver>();
-
-        services.AddScoped<IContentDisplayDriver, EditJsonActionsMenuContentDisplayDriver>();
     }
+}
+
+public class ContentEditorStartup : StartupBase
+{
+    private readonly AdminOptions _adminOptions;
+
+    public ContentEditorStartup(IOptions<AdminOptions> adminOptions) => _adminOptions = adminOptions.Value;
+
+    public override void ConfigureServices(IServiceCollection services) =>
+        services.AddScoped<IContentDisplayDriver, EditJsonActionsMenuContentDisplayDriver>();
 
     public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider) =>
         routes.MapAreaControllerRoute(

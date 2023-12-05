@@ -20,3 +20,14 @@ using static Lombiq.JsonEditor.Constants.FeatureIds;
         "OrchardCore.ResourceManagement",
     }
 )]
+
+[assembly: Feature(
+    Id = ContentEditor,
+    Name = "Lombiq JSON Content Editor",
+    Category = "Content",
+    Description = "Adds an actions menu item to the content item list for editing them as JSON.",
+    Dependencies = new[]
+    {
+        Default,
+    }
+)]
