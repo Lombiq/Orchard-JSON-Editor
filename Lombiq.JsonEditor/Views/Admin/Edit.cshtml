@@ -1,7 +1,14 @@
-﻿@model Lombiq.JsonEditor.ViewModels.EditContentItemViewModel
+﻿@using Microsoft.AspNetCore.Html
+@model Lombiq.JsonEditor.ViewModels.EditContentItemViewModel
 @{
     var returnUrl = Context.Request.Query["returnUrl"];
+
+    var warning = new HtmlString(" ").Join(
+        T["Be careful while editing a content item as any typo can lead to a loss of functionality."],
+        T["The submitted JSON will be deserialized and published so a properties may be altered or regenerated at that step."]);
 }
+
+<p class="alert alert-warning">@warning</p>
 
 <form method="post">
     @Html.AntiForgeryToken()
