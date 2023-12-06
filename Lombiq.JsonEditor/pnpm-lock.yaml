@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   jsoneditor:
-    specifier: 9.5.0
-    version: 9.5.0
+    specifier: 9.5.6
+    version: 9.5.6
 
 packages:
 
@@ -37,11 +37,11 @@ packages:
     dev: false
 
   /javascript-natural-sort@0.7.1:
-    resolution: {integrity: sha1-+eIwPUUH9tdDVac2ZNFED7Wg71k=}
+    resolution: {integrity: sha512-nO6jcEfZWQXDhOiBtG2KvKyEptz7RVbpGP4vTD2hLBdmNQSsCiicO2Ioinv6UI4y9ukqnBpy+XZ9H6uLNgJTlw==}
     dev: false
 
   /jmespath@0.15.0:
-    resolution: {integrity: sha1-o/Iiqarp+Wb10nx5ZRDigJF2Qhc=}
+    resolution: {integrity: sha512-+kHj8HXArPfpPEKGLZ+kB5ONRTCiGQXo8RQYL0hH8t6pWXUBBK5KkkQmTNOwKK4LEsd0yTsgtjJVm4UBSZea4w==}
     engines: {node: '>= 0.6.0'}
     dev: false
 
@@ -53,8 +53,8 @@ packages:
     resolution: {integrity: sha512-1QoztHPsMQqhDq0hlXY5ZqcEdUzxQEIxgFkKl4WUp2pgShObl+9ovi4kRh2TfvAfxAoHOJ9vIMEqk3k4iex7tg==}
     dev: false
 
-  /jsoneditor@9.5.0:
-    resolution: {integrity: sha512-iKeBlLwP6WgUZjJhJk2kVORmqtnrK0EZI2uvIO4E49kj97gEnjE+oKBjvzr1I0W9Nac1jw3iOvVHpLsPkHK5kg==}
+  /jsoneditor@9.5.6:
+    resolution: {integrity: sha512-smu4CKCOeJiizGGGYQ7ZAvCclnuJP7gX/wcoHw/DWiJMUZq+3KjJNDhYnVTRgi+Zk0UlPngA4egmuJre/H2mXg==}
     dependencies:
       ace-builds: 1.4.12
       ajv: 6.12.6
@@ -77,7 +77,7 @@ packages:
     dev: false
 
   /picomodal@3.0.0:
-    resolution: {integrity: sha1-+s0w9PvzSoCcHgTqUl8ATzmcC4I=}
+    resolution: {integrity: sha512-FoR3TDfuLlqUvcEeK5ifpKSVVns6B4BQvc8SDF6THVMuadya6LLtji0QgUDSStw0ZR2J7I6UGi5V2V23rnPWTw==}
     dev: false
 
   /punycode@2.1.1:
