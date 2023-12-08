@@ -1,5 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Html
+@using OrchardCore.ContentManagement.Metadata.Models
 @model Lombiq.JsonEditor.ViewModels.EditContentItemViewModel
+
 @{
     var returnUrl = Context.Request.Query["returnUrl"];
 
@@ -12,7 +14,7 @@
 
 <form method="post">
     @Html.AntiForgeryToken()
-    <input type="hidden" name="contentItemId" value="@Model.ContentItemId">
+    <input type="hidden" name="contentItemId" value="@Model.ContentItem.ContentItemId">
     <input type="hidden" name="returnUrl" value="@returnUrl" />
 
     <div class="form-group mb-3">
@@ -23,6 +25,11 @@
     </div>
 
     <shape type="Content_PublishButton" />
+
+    @if (Model.ContentTypeDefinition.IsDraftable())
+    {
+        <shape type="Content_SaveDraftButton" />
+    }
 
     @if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
     {

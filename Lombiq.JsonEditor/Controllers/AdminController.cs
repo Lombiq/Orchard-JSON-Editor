@@ -72,7 +72,8 @@ public class AdminController : Controller
         });
         await _layoutAccessor.AddShapeToZoneAsync("Title", titleShape);
 
-        return View(new EditContentItemViewModel(contentItem, JsonConvert.SerializeObject(contentItem)));
+        var definition = _contentDefinitionManager.GetTypeDefinition(contentItem.ContentType);
+        return View(new EditContentItemViewModel(contentItem, definition, JsonConvert.SerializeObject(contentItem)));
     }
 
     [ValidateAntiForgeryToken]
@@ -81,7 +82,8 @@ public class AdminController : Controller
         string contentItemId,
         string json,
         string returnUrl,
-        [Bind(Prefix = "submit.Publish")] string submitPublish)
+        [Bind(Prefix = "submit.Publish")] string submitPublish,
+        [Bind(Prefix = "submit.Save")] string submitSave)
     {
         if (string.IsNullOrWhiteSpace(contentItemId) ||
             string.IsNullOrWhiteSpace(json) ||
@@ -102,13 +104,10 @@ public class AdminController : Controller
             _contentManager,
             _contentDefinitionManager,
             _authorizationService,
-            _apiStringLocalizer)
-        {
-            ControllerContext = { HttpContext = HttpContext },
-        };
+            _apiStringLocalizer);
+        contentApiController.ControllerContext.HttpContext = HttpContext;
 
-        var result = await contentApiController.Post(contentItem);
-        switch (result)
+        switch (await contentApiController.Post(contentItem, submitSave != null))
         {
             case BadRequestObjectResult { Value: ValidationProblemDetails details }
                 when !string.IsNullOrWhiteSpace(details.Detail):
