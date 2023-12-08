@@ -1,4 +1,5 @@
-﻿using Lombiq.HelpfulLibraries.OrchardCore.Contents;
+﻿using AngleSharp.Common;
+using Lombiq.HelpfulLibraries.OrchardCore.Contents;
 using Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
 using Lombiq.JsonEditor.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -16,6 +17,8 @@ using OrchardCore.DisplayManagement.Layout;
 using OrchardCore.DisplayManagement.Notify;
 using OrchardCore.DisplayManagement.Title;
 using OrchardCore.Title.ViewModels;
+using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Lombiq.JsonEditor.Controllers;
@@ -100,14 +103,7 @@ public class AdminController : Controller
             return NotFound();
         }
 
-        using var contentApiController = new ApiController(
-            _contentManager,
-            _contentDefinitionManager,
-            _authorizationService,
-            _apiStringLocalizer);
-        contentApiController.ControllerContext.HttpContext = HttpContext;
-
-        switch (await contentApiController.Post(contentItem, submitSave != null))
+        switch (await UpdateContentAsync(contentItem, submitSave != null))
         {
             case BadRequestObjectResult { Value: ValidationProblemDetails details }
                 when !string.IsNullOrWhiteSpace(details.Detail):
@@ -122,7 +118,7 @@ public class AdminController : Controller
         }
 
         if (!string.IsNullOrEmpty(returnUrl) &&
-            submitPublish != "submit.PublishAndContinue" &&
+            (IsContinue(submitSave) || IsContinue(submitPublish)) &&
             Url.IsLocalUrl(returnUrl))
         {
             return Redirect(returnUrl);
@@ -133,6 +129,30 @@ public class AdminController : Controller
 
     private Task<bool> CanEditAsync(ContentItem contentItem) =>
         _authorizationService.AuthorizeAsync(User, CommonPermissions.EditContent, contentItem);
+
+    private async Task<IActionResult> UpdateContentAsync(ContentItem contentItem, bool isDraft)
+    {
+        var currentUser = User;
+        HttpContext.User = new ClaimsPrincipal(new ClaimsIdentity(User.Claims.Concat(Permissions.AccessContentApi)));
+
+        try
+        {
+            using var contentApiController = new ApiController(
+                _contentManager,
+                _contentDefinitionManager,
+                _authorizationService,
+                _apiStringLocalizer);
+            contentApiController.ControllerContext.HttpContext = HttpContext;
+            return await contentApiController.Post(contentItem, isDraft);
+        }
+        finally
+        {
+            HttpContext.User = currentUser;
+        }
+    }
+
+    private static bool IsContinue(string submitString) =>
+        submitString?.EndsWithOrdinalIgnoreCase("AndContinue") == true;
 
     private static string GetName(ContentItem contentItem) =>
         string.IsNullOrWhiteSpace(contentItem.DisplayText)
