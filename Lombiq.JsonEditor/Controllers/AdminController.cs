@@ -118,7 +118,7 @@ public class AdminController : Controller
         }
 
         if (!string.IsNullOrEmpty(returnUrl) &&
-            (IsContinue(submitSave) || IsContinue(submitPublish)) &&
+            !(IsContinue(submitSave) || IsContinue(submitPublish)) &&
             Url.IsLocalUrl(returnUrl))
         {
             return Redirect(returnUrl);
