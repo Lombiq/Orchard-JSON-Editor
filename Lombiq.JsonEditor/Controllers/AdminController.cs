@@ -85,12 +85,12 @@ public class AdminController : Controller
         }
 
         if (string.IsNullOrWhiteSpace(contentItem.ContentItemId)) contentItem.ContentItemId = contentItemId;
+        contentItem = await _contentManager.LoadAsync(contentItem);
+
         if (!await CanEditAsync(contentItem))
         {
             return NotFound();
         }
-
-        await _contentManager.LoadAsync(contentItem);
 
         if (await _contentManager.GetAsync(contentItem.ContentItemId, VersionOptions.Latest) is { } existing)
         {
