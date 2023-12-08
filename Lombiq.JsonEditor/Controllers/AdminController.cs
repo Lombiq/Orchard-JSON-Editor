@@ -90,6 +90,8 @@ public class AdminController : Controller
             return NotFound();
         }
 
+        await _contentManager.LoadAsync(contentItem);
+
         if (await _contentManager.GetAsync(contentItem.ContentItemId, VersionOptions.Latest) is { } existing)
         {
             existing.Latest = false;
