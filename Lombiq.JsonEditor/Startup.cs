@@ -17,7 +17,8 @@ using OrchardCore.Modules;
 using OrchardCore.Mvc.Core.Utilities;
 using OrchardCore.ResourceManagement;
 using System;
-using AdminController=Lombiq.JsonEditor.Controllers.AdminController;
+
+using AdminController = Lombiq.JsonEditor.Controllers.AdminController;
 
 namespace Lombiq.JsonEditor;
 
