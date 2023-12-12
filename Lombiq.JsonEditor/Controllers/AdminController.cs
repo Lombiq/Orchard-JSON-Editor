@@ -132,17 +132,23 @@ public class AdminController : Controller
 
     private async Task<IActionResult> UpdateContentAsync(ContentItem contentItem, bool isDraft)
     {
+        // The Content API Controller requires the AccessContentApi permission. As this isn't an external API request it
+        // doesn't make sense to require this permission. So we create a temporary claims principal and explicitly grant
+        // the permission
         var currentUser = User;
         HttpContext.User = new ClaimsPrincipal(new ClaimsIdentity(User.Claims.Concat(Permissions.AccessContentApi)));
 
         try
         {
+            // Here the API controller is called directly. The behavior is the same as if we sent a POST request using a
+            // HTTP client (except the permission bypass above), but it's faster and more resource efficient.
             var contentApiController = _contentApiControllerLazy.Value;
             contentApiController.ControllerContext.HttpContext = HttpContext;
             return await contentApiController.Post(contentItem, isDraft);
         }
         finally
         {
+            // Ensure that the original claims principal is restored, just in case.
             HttpContext.User = currentUser;
         }
     }
