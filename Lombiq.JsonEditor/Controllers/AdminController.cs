@@ -32,7 +32,7 @@ public class AdminController : Controller
     private readonly INotifier _notifier;
     private readonly IPageTitleBuilder _pageTitleBuilder;
     private readonly IShapeFactory _shapeFactory;
-    private readonly IStringLocalizer<ApiController> _apiStringLocalizer;
+    private readonly Lazy<ApiController> _contentApiControllerLazy;
     private readonly IStringLocalizer<AdminController> T;
     private readonly IHtmlLocalizer<AdminController> H;
 
@@ -43,7 +43,7 @@ public class AdminController : Controller
         IPageTitleBuilder pageTitleBuilder,
         IShapeFactory shapeFactory,
         IOrchardServices<AdminController> services,
-        IStringLocalizer<ApiController> apiStringLocalizer)
+        Lazy<ApiController> contentApiControllerLazy)
     {
         _authorizationService = services.AuthorizationService.Value;
         _contentManager = services.ContentManager.Value;
@@ -52,7 +52,7 @@ public class AdminController : Controller
         _notifier = notifier;
         _pageTitleBuilder = pageTitleBuilder;
         _shapeFactory = shapeFactory;
-        _apiStringLocalizer = apiStringLocalizer;
+        _contentApiControllerLazy = contentApiControllerLazy;
         T = services.StringLocalizer.Value;
         H = services.HtmlLocalizer.Value;
     }
@@ -137,11 +137,7 @@ public class AdminController : Controller
 
         try
         {
-            using var contentApiController = new ApiController(
-                _contentManager,
-                _contentDefinitionManager,
-                _authorizationService,
-                _apiStringLocalizer);
+            var contentApiController = _contentApiControllerLazy.Value;
             contentApiController.ControllerContext.HttpContext = HttpContext;
             return await contentApiController.Post(contentItem, isDraft);
         }
