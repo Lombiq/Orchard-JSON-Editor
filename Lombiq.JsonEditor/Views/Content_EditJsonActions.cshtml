@@ -1,0 +1,13 @@
+﻿@using OrchardCore.ContentManagement
+@using Lombiq.JsonEditor.Controllers
+
+@{
+    var contentItem = (ContentItem)Model.ContentItem;
+}
+
+<a asp-action="@nameof(AdminController.Edit)"
+   asp-controller="@typeof(AdminController).ControllerName()"
+   asp-route-area="@FeatureIds.Area"
+   asp-route-contentItemId="@contentItem.ContentItemId"
+   asp-route-returnUrl="@FullRequestPath"
+   class="dropdown-item btn-sm">@T["Edit as JSON"]</a>

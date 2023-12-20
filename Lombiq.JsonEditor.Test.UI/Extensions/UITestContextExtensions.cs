@@ -11,4 +11,7 @@ public static class UITestContextExtensions
 
     public static Task EnableJsonEditorFeatureAsync(this UITestContext context) =>
         context.EnableFeatureDirectlyAsync("Lombiq.JsonEditor");
+
+    public static Task EnableJsonContentEditorFeatureAsync(this UITestContext context) =>
+        context.EnableFeatureDirectlyAsync("Lombiq.JsonEditor.ContentEditor");
 }

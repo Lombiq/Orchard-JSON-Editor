@@ -15,6 +15,7 @@ public static class TestCaseUITestContextExtensions
     private const string WorldValue = "world";
     private const string TestField = "testField";
     private const string TestValue = "testValue";
+    private const string TestAuthor = "Custom Test Author";
 
     private static readonly By ObjectByXPath = By.XPath($"//div[@class='jsoneditor-readonly' and contains(text(),'object')]");
     private static readonly By ObjectCountByXPath = By.XPath($"//div[@class='jsoneditor-value jsoneditor-object' and contains(text(),'{{2}}')]");
@@ -24,7 +25,7 @@ public static class TestCaseUITestContextExtensions
 
     public static async Task TestJsonEditorBehaviorAsync(this UITestContext context)
     {
-        await context.EnableJsonEditorFeatureAsync();
+        await context.EnableJsonContentEditorFeatureAsync();
 
         await context.ExecuteJsonEditorSampleRecipeDirectlyAsync();
 
@@ -67,6 +68,17 @@ public static class TestCaseUITestContextExtensions
 
         await context.SwitchToModeAsync("Preview");
         context.TestCodeStyleMode();
+
+        // Test that content JSON editing works.
+        await context.GoToContentItemListAsync();
+        await context.SelectFromBootstrapDropdownReliablyAsync(
+            By.CssSelector(".list-group-item:nth-child(3) .dropdown-toggle.actions"),
+            "Edit as JSON");
+        context
+            .Get(By.XPath("//div[contains(@class, 'jsoneditor-field') and contains(., 'Author')]/../..//div[contains(@class, 'jsoneditor-value')]"))
+            .FillInWith(TestAuthor);
+        await context.ClickPublishAsync();
+        context.Exists(By.CssSelector(".ta-badge[data-bs-original-title='Author']"));
     }
 
     private static void CheckValueInTreeMode(this UITestContext context, string arrayValue, bool exists = true)

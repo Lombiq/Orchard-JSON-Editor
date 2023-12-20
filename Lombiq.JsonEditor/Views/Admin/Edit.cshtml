@@ -1,0 +1,38 @@
+﻿@using Microsoft.AspNetCore.Html
+@using OrchardCore.ContentManagement.Metadata.Models
+@model Lombiq.JsonEditor.ViewModels.EditContentItemViewModel
+
+@{
+    var returnUrl = Context.Request.Query["returnUrl"];
+
+    var warning = new HtmlString(" ").Join(
+        T["Be careful while editing a content item as any typo can lead to a loss of functionality."],
+        T["The submitted JSON will be deserialized and published so properties may be altered or regenerated at that step."]);
+}
+
+<p class="alert alert-warning">@warning</p>
+
+<form method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="contentItemId" value="@Model.ContentItem.ContentItemId">
+    <input type="hidden" name="returnUrl" value="@returnUrl" />
+
+    <div class="form-group mb-3">
+        <json-editor
+            json="@Model.Json"
+            options="@JsonEditorOptions.GetSample(T)"
+            name="json"></json-editor>
+    </div>
+
+    <shape type="Content_PublishButton" />
+
+    @if (Model.ContentTypeDefinition.IsDraftable())
+    {
+        <shape type="Content_SaveDraftButton" />
+    }
+
+    @if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
+    {
+        <a class="btn btn-secondary cancel" role="button" href="@returnUrl">@T["Cancel"]</a>
+    }
+</form>
