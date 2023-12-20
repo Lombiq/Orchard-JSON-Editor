@@ -134,14 +134,14 @@ public class AdminController : Controller
     {
         // The Content API Controller requires the AccessContentApi permission. As this isn't an external API request it
         // doesn't make sense to require this permission. So we create a temporary claims principal and explicitly grant
-        // the permission
+        // the permission.
         var currentUser = User;
         HttpContext.User = new ClaimsPrincipal(new ClaimsIdentity(User.Claims.Concat(Permissions.AccessContentApi)));
 
         try
         {
-            // Here the API controller is called directly. The behavior is the same as if we sent a POST request using a
-            // HTTP client (except the permission bypass above), but it's faster and more resource efficient.
+            // Here the API controller is called directly. The behavior is the same as if we sent a POST request using an
+            // HTTP client (except the permission bypass above), but it's faster and more resource-efficient.
             var contentApiController = _contentApiControllerLazy.Value;
             contentApiController.ControllerContext.HttpContext = HttpContext;
             return await contentApiController.Post(contentItem, isDraft);
