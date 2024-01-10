@@ -1,10 +1,12 @@
 ﻿using Lombiq.HelpfulLibraries.AspNetCore.Security;
 using Lombiq.JsonEditor.Constants;
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives.CommonValues;
@@ -27,9 +29,15 @@ public class JsonEditorContentSecurityPolicyProvider : ResourceManagerContentSec
         HttpContext context,
         bool resourceExists)
     {
-        securityPolicies[ScriptSrc] = IContentSecurityPolicyProvider
-            .GetDirective(securityPolicies, ScriptSrc)
-            .MergeWordSets(DirectiveValue);
+        // Fixes "[Severe] blob:https://localhost:9391/6a0aeee0-8ec7-449c-86b4-7668d046d24c 0 Refused to load the
+        // script 'data:application/javascript;base64,...' because it violates the following Content Security Policy
+        // directive" error.
+        if (resourceExists)
+        {
+            securityPolicies[ScriptSrc] = IContentSecurityPolicyProvider
+                .GetDirective(securityPolicies, ScriptSrc)
+                .MergeWordSets(DirectiveValue);
+        }
 
         return ValueTask.CompletedTask;
     }
