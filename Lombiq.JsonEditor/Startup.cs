@@ -2,6 +2,7 @@ using Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
 using Lombiq.JsonEditor.Constants;
 using Lombiq.JsonEditor.Drivers;
 using Lombiq.JsonEditor.Fields;
+using Lombiq.JsonEditor.Services;
 using Lombiq.JsonEditor.Settings;
 using Lombiq.JsonEditor.TagHelpers;
 using Microsoft.AspNetCore.Builder;
@@ -46,6 +47,7 @@ public class ContentEditorStartup : StartupBase
         services.AddScoped<IContentDisplayDriver, EditJsonActionsMenuContentDisplayDriver>();
         services.AddOrchardServices();
         services.AddScoped<ApiController>();
+        services.AddContentSecurityPolicyProvider<JsonEditorContentSecurityPolicyProvider>();
     }
 
     public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider) =>
