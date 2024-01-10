@@ -27,12 +27,9 @@ public class JsonEditorContentSecurityPolicyProvider : ResourceManagerContentSec
         HttpContext context,
         bool resourceExists)
     {
-        if (context.Request.Scheme == "blob")
-        {
-            securityPolicies[DirectiveName] = IContentSecurityPolicyProvider
-                .GetDirective(securityPolicies, DirectiveNameChain.ToArray())
-                .MergeWordSets(DirectiveValue);
-        }
+        securityPolicies[ScriptSrc] = IContentSecurityPolicyProvider
+            .GetDirective(securityPolicies, ScriptSrc)
+            .MergeWordSets(DirectiveValue);
 
         return ValueTask.CompletedTask;
     }
