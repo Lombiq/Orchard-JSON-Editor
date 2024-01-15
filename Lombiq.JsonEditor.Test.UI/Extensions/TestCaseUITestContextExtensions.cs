@@ -10,7 +10,7 @@ namespace Lombiq.JsonEditor.Tests.UI.Extensions;
 
 public static class TestCaseUITestContextExtensions
 {
-    private const string SampleContentItemId = "4xapn6ykttkk6wbbwgg1aaxqda";
+    private const string SampleContentItemId = "jsonexamplepage00000000000";
     private const string HelloValue = "hello";
     private const string WorldValue = "world";
     private const string TestField = "testField";
