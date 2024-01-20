@@ -11,11 +11,9 @@ using System.Threading.Tasks;
 
 namespace Lombiq.JsonEditor.Drivers;
 
-public class JsonFieldDisplayDriver : ContentFieldDisplayDriver<JsonField>
+public class JsonFieldDisplayDriver(IStringLocalizer<JsonFieldDisplayDriver> stringLocalizer) : ContentFieldDisplayDriver<JsonField>
 {
-    private readonly IStringLocalizer T;
-
-    public JsonFieldDisplayDriver(IStringLocalizer<JsonFieldDisplayDriver> stringLocalizer) => T = stringLocalizer;
+    private readonly IStringLocalizer T = stringLocalizer;
 
     public override IDisplayResult Display(JsonField field, BuildFieldDisplayContext fieldDisplayContext) =>
         Initialize<DisplayJsonFieldViewModel>(GetDisplayShapeType(fieldDisplayContext), model =>

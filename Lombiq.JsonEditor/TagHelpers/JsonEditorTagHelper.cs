@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 namespace Lombiq.JsonEditor.TagHelpers;
 
 [HtmlTargetElement("json-editor")]
-public class JsonEditorTagHelper : TagHelper
+public class JsonEditorTagHelper(IDisplayHelper displayHelper, IShapeFactory factory) : TagHelper
 {
-    private readonly IDisplayHelper _displayHelper;
-    private readonly IShapeFactory _shapeFactory;
-
     [HtmlAttributeName("content")]
     public object Content { get; set; }
 
@@ -24,20 +21,14 @@ public class JsonEditorTagHelper : TagHelper
     [HtmlAttributeName("name")]
     public string InputName { get; set; }
 
-    public JsonEditorTagHelper(IDisplayHelper displayHelper, IShapeFactory factory)
-    {
-        _displayHelper = displayHelper;
-        _shapeFactory = factory;
-    }
-
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
-        var shape = await _shapeFactory.New.JsonEditor(
+        var shape = await factory.New.JsonEditor(
             Content: Content,
             SerializedJson: SerializedJson,
             Options: Options,
             InputName: InputName);
-        var content = (IHtmlContent)await _displayHelper.ShapeExecuteAsync(shape);
+        var content = (IHtmlContent)await displayHelper.ShapeExecuteAsync(shape);
 
         output.TagName = null;
         output.TagMode = TagMode.StartTagAndEndTag;

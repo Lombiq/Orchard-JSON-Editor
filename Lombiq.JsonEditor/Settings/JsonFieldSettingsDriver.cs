@@ -9,11 +9,9 @@ using System.Threading.Tasks;
 
 namespace Lombiq.JsonEditor.Settings;
 
-public class JsonFieldSettingsDriver : ContentPartFieldDefinitionDisplayDriver<JsonField>
+public class JsonFieldSettingsDriver(IStringLocalizer<JsonFieldSettingsDriver> stringLocalizer) : ContentPartFieldDefinitionDisplayDriver<JsonField>
 {
-    private readonly IStringLocalizer T;
-
-    public JsonFieldSettingsDriver(IStringLocalizer<JsonFieldSettingsDriver> stringLocalizer) => T = stringLocalizer;
+    private readonly IStringLocalizer T = stringLocalizer;
 
     public override IDisplayResult Edit(ContentPartFieldDefinition model) =>
         Initialize<JsonFieldSettings>($"{nameof(JsonFieldSettings)}_Edit", model.PopulateSettings)
