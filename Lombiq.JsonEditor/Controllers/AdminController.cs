@@ -23,19 +23,39 @@ using System.Threading.Tasks;
 
 namespace Lombiq.JsonEditor.Controllers;
 
-public class AdminController(
-    IContentDefinitionManager contentDefinitionManager,
-    ILayoutAccessor layoutAccessor,
-    INotifier notifier,
-    IPageTitleBuilder pageTitleBuilder,
-    IShapeFactory shapeFactory,
-    IOrchardServices<AdminController> services,
-    Lazy<ApiController> contentApiControllerLazy) : Controller
+public class AdminController : Controller
 {
-    private readonly IAuthorizationService _authorizationService = services.AuthorizationService.Value;
-    private readonly IContentManager _contentManager = services.ContentManager.Value;
-    private readonly IStringLocalizer<AdminController> T = services.StringLocalizer.Value;
-    private readonly IHtmlLocalizer<AdminController> H = services.HtmlLocalizer.Value;
+    private readonly IAuthorizationService _authorizationService;
+    private readonly IContentManager _contentManager;
+    private readonly IContentDefinitionManager _contentDefinitionManager;
+    private readonly ILayoutAccessor _layoutAccessor;
+    private readonly INotifier _notifier;
+    private readonly IPageTitleBuilder _pageTitleBuilder;
+    private readonly IShapeFactory _shapeFactory;
+    private readonly Lazy<ApiController> _contentApiControllerLazy;
+    private readonly IStringLocalizer<AdminController> T;
+    private readonly IHtmlLocalizer<AdminController> H;
+
+    public AdminController(
+        IContentDefinitionManager contentDefinitionManager,
+        ILayoutAccessor layoutAccessor,
+        INotifier notifier,
+        IPageTitleBuilder pageTitleBuilder,
+        IShapeFactory shapeFactory,
+        IOrchardServices<AdminController> services,
+        Lazy<ApiController> contentApiControllerLazy)
+    {
+        _authorizationService = services.AuthorizationService.Value;
+        _contentManager = services.ContentManager.Value;
+        _contentDefinitionManager = contentDefinitionManager;
+        _layoutAccessor = layoutAccessor;
+        _notifier = notifier;
+        _pageTitleBuilder = pageTitleBuilder;
+        _shapeFactory = shapeFactory;
+        _contentApiControllerLazy = contentApiControllerLazy;
+        T = services.StringLocalizer.Value;
+        H = services.HtmlLocalizer.Value;
+    }
 
     public async Task<IActionResult> Edit(string contentItemId)
     {
@@ -47,15 +67,15 @@ public class AdminController(
         }
 
         var title = T["Edit {0} as JSON", GetName(contentItem)].Value;
-        pageTitleBuilder.AddSegment(new StringHtmlContent(title));
-        var titleShape = await shapeFactory.CreateAsync<TitlePartViewModel>("TitlePart", model =>
+        _pageTitleBuilder.AddSegment(new StringHtmlContent(title));
+        var titleShape = await _shapeFactory.CreateAsync<TitlePartViewModel>("TitlePart", model =>
         {
             model.Title = title;
             model.ContentItem = contentItem;
         });
-        await layoutAccessor.AddShapeToZoneAsync("Title", titleShape);
+        await _layoutAccessor.AddShapeToZoneAsync("Title", titleShape);
 
-        var definition = await contentDefinitionManager.GetTypeDefinitionAsync(contentItem.ContentType);
+        var definition = await _contentDefinitionManager.GetTypeDefinitionAsync(contentItem.ContentType);
         return View(new EditContentItemViewModel(contentItem, definition, JsonConvert.SerializeObject(contentItem)));
     }
 
@@ -87,13 +107,13 @@ public class AdminController(
         {
             case BadRequestObjectResult { Value: ValidationProblemDetails details }
                 when !string.IsNullOrWhiteSpace(details.Detail):
-                await notifier.ErrorAsync(new LocalizedHtmlString(details.Detail, details.Detail));
+                await _notifier.ErrorAsync(new LocalizedHtmlString(details.Detail, details.Detail));
                 return await Edit(contentItem.ContentItemId);
             case OkObjectResult:
-                await notifier.SuccessAsync(H["Content item {0} has been successfully saved.", GetName(contentItem)]);
+                await _notifier.SuccessAsync(H["Content item {0} has been successfully saved.", GetName(contentItem)]);
                 break;
             default:
-                await notifier.ErrorAsync(H["The submission has failed, please try again."]);
+                await _notifier.ErrorAsync(H["The submission has failed, please try again."]);
                 return await Edit(contentItem.ContentItemId);
         }
 
@@ -122,7 +142,7 @@ public class AdminController(
         {
             // Here the API controller is called directly. The behavior is the same as if we sent a POST request using an
             // HTTP client (except the permission bypass above), but it's faster and more resource-efficient.
-            var contentApiController = contentApiControllerLazy.Value;
+            var contentApiController = _contentApiControllerLazy.Value;
             contentApiController.ControllerContext.HttpContext = HttpContext;
             return await contentApiController.Post(contentItem, isDraft);
         }

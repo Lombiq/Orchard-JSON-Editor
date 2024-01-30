@@ -36,9 +36,11 @@ public class Startup : StartupBase
 }
 
 [Feature(FeatureIds.ContentEditor)]
-public class ContentEditorStartup(IOptions<AdminOptions> adminOptions) : StartupBase
+public class ContentEditorStartup : StartupBase
 {
-    private readonly AdminOptions _adminOptions = adminOptions.Value;
+    private readonly AdminOptions _adminOptions;
+
+    public ContentEditorStartup(IOptions<AdminOptions> adminOptions) => _adminOptions = adminOptions.Value;
 
     public override void ConfigureServices(IServiceCollection services)
     {
