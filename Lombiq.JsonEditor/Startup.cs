@@ -6,8 +6,6 @@ using Lombiq.JsonEditor.Fields;
 using Lombiq.JsonEditor.Services;
 using Lombiq.JsonEditor.Settings;
 using Lombiq.JsonEditor.TagHelpers;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using OrchardCore.Admin;
@@ -16,11 +14,7 @@ using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.Contents.Controllers;
 using OrchardCore.ContentTypes.Editors;
 using OrchardCore.Modules;
-using OrchardCore.Mvc.Core.Utilities;
 using OrchardCore.ResourceManagement;
-using System;
-
-using AdminController = Lombiq.JsonEditor.Controllers.AdminController;
 
 namespace Lombiq.JsonEditor;
 
