@@ -1,4 +1,5 @@
 using Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
+using Lombiq.HelpfulLibraries.OrchardCore.Mvc;
 using Lombiq.JsonEditor.Constants;
 using Lombiq.JsonEditor.Drivers;
 using Lombiq.JsonEditor.Fields;
@@ -48,12 +49,6 @@ public class ContentEditorStartup : StartupBase
         services.AddOrchardServices();
         services.AddScoped<ApiController>();
         services.AddContentSecurityPolicyProvider<JsonEditorContentSecurityPolicyProvider>();
+        AdminRouteAttributeRouteMapper.AddToServices(services);
     }
-
-    public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider) =>
-        routes.MapAreaControllerRoute(
-            name: "EditContentItem",
-            areaName: FeatureIds.Area,
-            pattern: _adminOptions.AdminUrlPrefix + "/Contents/ContentItems/{contentItemId}/Edit/Json",
-            defaults: new { controller = typeof(AdminController).ControllerName(), action = nameof(AdminController.Edit) });
 }
