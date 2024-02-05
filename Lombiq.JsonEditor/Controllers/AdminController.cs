@@ -1,6 +1,7 @@
 using AngleSharp.Common;
 using Lombiq.HelpfulLibraries.OrchardCore.Contents;
 using Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
+using Lombiq.HelpfulLibraries.OrchardCore.Mvc;
 using Lombiq.JsonEditor.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -57,6 +58,7 @@ public class AdminController : Controller
         H = services.HtmlLocalizer.Value;
     }
 
+    [AdminRoute("Contents/ContentItems/{contentItemId}/Edit/Json")]
     public async Task<IActionResult> Edit(string contentItemId)
     {
         if (string.IsNullOrWhiteSpace(contentItemId) ||
