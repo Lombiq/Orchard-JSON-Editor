@@ -1,4 +1,4 @@
-﻿using AngleSharp.Common;
+using AngleSharp.Common;
 using Lombiq.HelpfulLibraries.OrchardCore.Contents;
 using Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
 using Lombiq.HelpfulLibraries.OrchardCore.Mvc;
@@ -77,7 +77,7 @@ public class AdminController : Controller
         });
         await _layoutAccessor.AddShapeToZoneAsync("Title", titleShape);
 
-        var definition = _contentDefinitionManager.GetTypeDefinition(contentItem.ContentType);
+        var definition = await _contentDefinitionManager.GetTypeDefinitionAsync(contentItem.ContentType);
         return View(new EditContentItemViewModel(contentItem, definition, JsonConvert.SerializeObject(contentItem)));
     }
 

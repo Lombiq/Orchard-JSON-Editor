@@ -14,11 +14,11 @@ using static Lombiq.JsonEditor.Constants.FeatureIds;
     Name = "Lombiq JSON Editor",
     Category = "Content",
     Description = "Module for displaying a JSON Editor like on jsoneditoronline.org.",
-    Dependencies = new[]
-    {
+    Dependencies =
+    [
         "OrchardCore.Contents",
         "OrchardCore.ResourceManagement",
-    }
+    ]
 )]
 
 [assembly: Feature(
@@ -26,8 +26,8 @@ using static Lombiq.JsonEditor.Constants.FeatureIds;
     Name = "Lombiq JSON Content Editor",
     Category = "Content",
     Description = "Adds an actions menu item to the content item list for editing them as JSON.",
-    Dependencies = new[]
-    {
+    Dependencies =
+    [
         Default,
-    }
+    ]
 )]
