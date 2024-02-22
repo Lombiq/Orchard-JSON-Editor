@@ -31,7 +31,7 @@ public class JsonEditorContentSecurityPolicyProvider : ResourceManagerContentSec
         // directive" error.
         if (resourceExists)
         {
-            securityPolicies[ScriptSrc] = IContentSecurityPolicyProvider
+            securityPolicies[ScriptSrc] = ContentSecurityPolicyProvider
                 .GetDirective(securityPolicies, ScriptSrc)
                 .MergeWordSets(DirectiveValue);
         }
