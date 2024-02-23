@@ -19,12 +19,6 @@
     var uniqueGuid = Guid.NewGuid();
     var editorId = $"{editorName}_{uniqueGuid:N}";
     var inputId = $"{inputName}_{uniqueGuid:N}";
-
-    var camelCase = new JsonSerializerSettings
-    {
-        ContractResolver = new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy() },
-        Formatting = Formatting.Indented,
-    };
 }
 <div id="@editorId" class="@editorName"></div>
 <input id="@inputId" class="@inputName" name="@name" type="hidden" />
@@ -38,7 +32,7 @@
         var $editor = $('#@editorId');
         var $input = $('#@inputId');
 
-        var options = @Json.Serialize(options, camelCase);
+        var options = @Json.Serialize(options);
 
         options.onChange = function () {
             try {

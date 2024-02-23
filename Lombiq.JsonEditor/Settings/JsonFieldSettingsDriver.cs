@@ -2,6 +2,7 @@ using Lombiq.JsonEditor.Fields;
 using Lombiq.JsonEditor.Models;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
+using OrchardCore.ContentManagement.Metadata.Builders;
 using OrchardCore.ContentManagement.Metadata.Models;
 using OrchardCore.ContentTypes.Editors;
 using OrchardCore.DisplayManagement.Views;
@@ -16,8 +17,8 @@ public class JsonFieldSettingsDriver : ContentPartFieldDefinitionDisplayDriver<J
     public JsonFieldSettingsDriver(IStringLocalizer<JsonFieldSettingsDriver> stringLocalizer) => T = stringLocalizer;
 
     public override IDisplayResult Edit(ContentPartFieldDefinition model) =>
-        Initialize<JsonFieldSettings>($"{nameof(JsonFieldSettings)}_Edit", model.PopulateSettings)
-            .Location("Content");
+        Initialize<JsonFieldSettings>($"{nameof(JsonFieldSettings)}_Edit", model.CopySettingsTo)
+            .PlaceInContent();
 
     public override async Task<IDisplayResult> UpdateAsync(
         ContentPartFieldDefinition model,
