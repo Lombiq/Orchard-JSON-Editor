@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Localization;
-using Newtonsoft.Json;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.Contents;
@@ -20,6 +19,7 @@ using OrchardCore.DisplayManagement.Title;
 using OrchardCore.Title.ViewModels;
 using System;
 using System.Security.Claims;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Lombiq.JsonEditor.Controllers;
@@ -78,7 +78,7 @@ public class AdminController : Controller
         await _layoutAccessor.AddShapeToZoneAsync("Title", titleShape);
 
         var definition = await _contentDefinitionManager.GetTypeDefinitionAsync(contentItem.ContentType);
-        return View(new EditContentItemViewModel(contentItem, definition, JsonConvert.SerializeObject(contentItem)));
+        return View(new EditContentItemViewModel(contentItem, definition, JsonSerializer.Serialize(contentItem)));
     }
 
     [ValidateAntiForgeryToken]
@@ -92,7 +92,7 @@ public class AdminController : Controller
     {
         if (string.IsNullOrWhiteSpace(contentItemId) ||
             string.IsNullOrWhiteSpace(json) ||
-            JsonConvert.DeserializeObject<ContentItem>(json) is not { } contentItem)
+            JsonSerializer.Deserialize<ContentItem>(json) is not { } contentItem)
         {
             return NotFound();
         }

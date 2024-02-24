@@ -1,12 +1,12 @@
+using Lombiq.HelpfulLibraries.Common.Utilities;
 using Lombiq.JsonEditor.Fields;
 using Lombiq.JsonEditor.ViewModels;
 using Microsoft.Extensions.Localization;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.ContentManagement.Display.Models;
 using OrchardCore.DisplayManagement.ModelBinding;
 using OrchardCore.DisplayManagement.Views;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Lombiq.JsonEditor.Drivers;
@@ -42,7 +42,7 @@ public class JsonFieldDisplayDriver : ContentFieldDisplayDriver<JsonField>
 
         if (!await updater.TryUpdateModelAsync(model, Prefix)) return await EditAsync(field, context);
 
-        if (!TryParse(model.Value))
+        if (JsonHelpers.ValidateJsonIfNotNull(model.Value) == false)
         {
             updater.ModelState.AddModelError(Prefix, T["The input isn't a valid JSON entity."]);
         }
@@ -52,18 +52,5 @@ public class JsonFieldDisplayDriver : ContentFieldDisplayDriver<JsonField>
         }
 
         return await EditAsync(field, context);
-    }
-
-    private static bool TryParse(string value)
-    {
-        try
-        {
-            JObject.Parse(value);
-            return true;
-        }
-        catch (JsonException)
-        {
-            return false;
-        }
     }
 }
