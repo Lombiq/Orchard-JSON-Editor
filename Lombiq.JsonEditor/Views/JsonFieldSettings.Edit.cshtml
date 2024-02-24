@@ -2,7 +2,7 @@
 
 @{
     var json = string.IsNullOrEmpty(Model.JsonEditorOptions)
-        ? JsonConvert.SerializeObject(JsonEditorOptions.GetSample(T))
+        ? JsonSerializer.Serialize(JsonEditorOptions.GetSample(T))
         : Model.JsonEditorOptions;
 }
 
