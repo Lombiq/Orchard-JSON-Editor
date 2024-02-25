@@ -6,7 +6,6 @@ using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.ContentManagement.Display.Models;
 using OrchardCore.DisplayManagement.ModelBinding;
 using OrchardCore.DisplayManagement.Views;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Lombiq.JsonEditor.Drivers;
