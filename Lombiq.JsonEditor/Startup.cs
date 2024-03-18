@@ -1,5 +1,4 @@
 using Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
-using Lombiq.HelpfulLibraries.OrchardCore.Mvc;
 using Lombiq.JsonEditor.Constants;
 using Lombiq.JsonEditor.Drivers;
 using Lombiq.JsonEditor.Fields;
@@ -43,6 +42,5 @@ public class ContentEditorStartup : StartupBase
         services.AddOrchardServices();
         services.AddScoped<ApiController>();
         services.AddContentSecurityPolicyProvider<JsonEditorContentSecurityPolicyProvider>();
-        AdminRouteAttributeRouteMapper.AddToServices(services);
     }
 }

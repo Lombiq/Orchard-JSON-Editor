@@ -3,7 +3,7 @@
 
 @{
     var name = (Model.PartFieldDefinition.PartDefinition.Name + Model.PartFieldDefinition.Name).ToCamelCase();
-    var jObject = JObject.Parse(Model.Value ?? "{}");
+    var safeJson = JsonNode.Parse(Model.Value ?? "{}")?.ToString() ?? "{}";
 }
 
 @* This exposes the field value to the client JavaScript. Re-parsing the JSON into JObject ensures that there is no
@@ -11,5 +11,5 @@
 <script>
     if (!('JsonField' in window) || !window.JsonField) window.JsonField = {};
     var fieldName = @name.JsonHtmlContent();
-    window.JsonField[fieldName] = @Html.Raw(jObject.ToString());
+    window.JsonField[fieldName] = @Html.Raw(safeJson);
 </script>

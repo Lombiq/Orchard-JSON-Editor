@@ -1,9 +1,9 @@
 using Atata;
 using Lombiq.Tests.UI.Extensions;
 using Lombiq.Tests.UI.Services;
-using Newtonsoft.Json.Linq;
 using OpenQA.Selenium;
 using Shouldly;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
 namespace Lombiq.JsonEditor.Tests.UI.Extensions;
@@ -139,7 +139,7 @@ public static class TestCaseUITestContextExtensions
     private static void TestCodeStyleMode(this UITestContext context)
     {
         // This field is hidden, but its content reflects what's in the editor.
-        var editorContent = JObject
+        var editorContent = JsonNode
             .Parse(context.Get(By.XPath($"//input[@class='jsonEditor__input']").OfAnyVisibility())
             .GetValue());
 

@@ -1,12 +1,12 @@
 @{
     var json = Model.Content switch
     {
-        JToken jToken => jToken,
-        { } someObject => JToken.FromObject(someObject),
+        JsonNode jsonNode => jsonNode,
+        { } someObject => JsonSerializer.SerializeToNode(someObject),
         null when Model.SerializedJson?.ToString() is string jsonString && !string.IsNullOrWhiteSpace(jsonString) =>
-            JToken.Parse(jsonString),
-        _ => new JObject(),
-    };
+            JsonNode.Parse(jsonString),
+        _ => null,
+    } ?? new JsonObject();
     var options = Model.Options as JsonEditorOptions ?? new JsonEditorOptions();
     var name = Model.InputName?.ToString() as string;
 
@@ -19,12 +19,6 @@
     var uniqueGuid = Guid.NewGuid();
     var editorId = $"{editorName}_{uniqueGuid:N}";
     var inputId = $"{inputName}_{uniqueGuid:N}";
-
-    var camelCase = new JsonSerializerSettings
-    {
-        ContractResolver = new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy() },
-        Formatting = Formatting.Indented,
-    };
 }
 <div id="@editorId" class="@editorName"></div>
 <input id="@inputId" class="@inputName" name="@name" type="hidden" />
@@ -35,10 +29,10 @@
 
 <script at="Foot" depends-on="jQuery,@ResourceNames.Library">
     jQuery(function ($) {
-        var $editor = $('#@editorId');
-        var $input = $('#@inputId');
+        const $editor = $('#@editorId');
+        const $input = $('#@inputId');
 
-        var options = @Json.Serialize(options, camelCase);
+        const options = @Json.Serialize(options);
 
         options.onChange = function () {
             try {
@@ -57,8 +51,8 @@
             $input.trigger('change');
         };
 
-        var editor = new JSONEditor($editor[0], options);
-        var json = @Html.Raw(json.ToString());
+        const editor = new JSONEditor($editor[0], options);
+        const json = @Html.Raw(json.ToString());
 
         editor.set(json);
         options.onChange();

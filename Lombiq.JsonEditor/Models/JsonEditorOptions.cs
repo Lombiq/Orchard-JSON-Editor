@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc.Localization;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace Lombiq.JsonEditor.Models;
 
@@ -29,7 +29,7 @@ public class JsonEditorOptions
     /// </summary>
     public bool History { get; set; } = true;
 
-    [JsonProperty("mode")]
+    [JsonPropertyName("mode")]
     private string ModeString { get; set; } = "tree";
 
     /// <summary>
