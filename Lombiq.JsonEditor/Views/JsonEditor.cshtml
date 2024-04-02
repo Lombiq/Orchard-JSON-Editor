@@ -2,7 +2,7 @@
     var json = Model.Content switch
     {
         JsonNode jsonNode => jsonNode,
-        { } someObject => JsonSerializer.SerializeToNode(someObject),
+        object someObject => JObject.FromObject(someObject),
         null when Model.SerializedJson?.ToString() is string jsonString && !string.IsNullOrWhiteSpace(jsonString) =>
             JsonNode.Parse(jsonString),
         _ => null,
