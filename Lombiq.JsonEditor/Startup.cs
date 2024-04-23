@@ -10,7 +10,6 @@ using Microsoft.Extensions.Options;
 using OrchardCore.Admin;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
-using OrchardCore.Contents.Controllers;
 using OrchardCore.ContentTypes.Editors;
 using OrchardCore.Modules;
 using OrchardCore.ResourceManagement;
