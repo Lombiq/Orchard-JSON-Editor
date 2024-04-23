@@ -40,7 +40,6 @@ public class ContentEditorStartup : StartupBase
     {
         services.AddScoped<IContentDisplayDriver, EditJsonActionsMenuContentDisplayDriver>();
         services.AddOrchardServices();
-        services.AddScoped<ApiController>();
         services.AddContentSecurityPolicyProvider<JsonEditorContentSecurityPolicyProvider>();
     }
 }
