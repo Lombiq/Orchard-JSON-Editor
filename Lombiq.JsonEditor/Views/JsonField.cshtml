@@ -10,6 +10,6 @@
     dangerous content (such as JS code injection) in there, so it's safe to pass the value into Html.Raw(). *@
 <script>
     if (!('JsonField' in window) || !window.JsonField) window.JsonField = {};
-    var fieldName = @name.JsonHtmlContent();
+    const fieldName = @name.JsonHtmlContent();
     window.JsonField[fieldName] = @Html.Raw(safeJson);
 </script>
