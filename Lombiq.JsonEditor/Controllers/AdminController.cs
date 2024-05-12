@@ -217,7 +217,7 @@ public class AdminController : Controller
             return ValidationProblem(new ValidationProblemDetails(ModelState)
             {
                 Title = T["One or more validation errors occurred."],
-                Detail = string.Join(", ", ModelState.Values.SelectMany(x => x.Errors.Select(x => x.ErrorMessage))),
+                Detail = string.Join(", ", ModelState.Values.SelectMany(state => state.Errors.Select(error => error.ErrorMessage))),
                 Status = (int)HttpStatusCode.BadRequest,
             });
         }
