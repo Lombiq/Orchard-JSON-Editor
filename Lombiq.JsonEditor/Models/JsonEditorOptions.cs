@@ -30,6 +30,7 @@ public class JsonEditorOptions
     public bool History { get; set; } = true;
 
     [JsonPropertyName("mode")]
+    [JsonInclude]
     private string ModeString { get; set; } = "tree";
 
     /// <summary>
