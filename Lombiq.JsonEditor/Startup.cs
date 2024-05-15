@@ -1,5 +1,4 @@
 using Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
-using Lombiq.HelpfulLibraries.OrchardCore.Mvc;
 using Lombiq.JsonEditor.Constants;
 using Lombiq.JsonEditor.Drivers;
 using Lombiq.JsonEditor.Fields;
@@ -11,7 +10,6 @@ using Microsoft.Extensions.Options;
 using OrchardCore.Admin;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
-using OrchardCore.Contents.Controllers;
 using OrchardCore.ContentTypes.Editors;
 using OrchardCore.Modules;
 using OrchardCore.ResourceManagement;
@@ -41,8 +39,6 @@ public class ContentEditorStartup : StartupBase
     {
         services.AddScoped<IContentDisplayDriver, EditJsonActionsMenuContentDisplayDriver>();
         services.AddOrchardServices();
-        services.AddScoped<ApiController>();
         services.AddContentSecurityPolicyProvider<JsonEditorContentSecurityPolicyProvider>();
-        AdminRouteAttributeRouteMapper.AddToServices(services);
     }
 }
