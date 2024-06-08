@@ -61,6 +61,8 @@ public class AdminController : Controller
     [AdminRoute("Contents/ContentItems/{contentItemId}/Edit/Json")]
     public async Task<IActionResult> Edit(string contentItemId)
     {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
         if (string.IsNullOrWhiteSpace(contentItemId) ||
             await _contentManager.GetAsync(contentItemId, VersionOptions.Latest) is not { } contentItem ||
             !await CanEditAsync(contentItem))
@@ -90,6 +92,8 @@ public class AdminController : Controller
         [Bind(Prefix = "submit.Publish")] string submitPublish,
         [Bind(Prefix = "submit.Save")] string submitSave)
     {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
         if (string.IsNullOrWhiteSpace(contentItemId) ||
             string.IsNullOrWhiteSpace(json) ||
             JsonConvert.DeserializeObject<ContentItem>(json) is not { } contentItem)
