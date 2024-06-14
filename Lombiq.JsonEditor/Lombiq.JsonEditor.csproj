@@ -17,11 +17,10 @@
     <PackageTags>OrchardCore;Lombiq;AspNetCore;JSONEditor</PackageTags>
     <RepositoryUrl>https://github.com/Lombiq/Orchard-JSON-Editor</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Lombiq/Orchard-JSON-Editor</PackageProjectUrl>
-    <PackageLicenseFile>License.md</PackageLicenseFile>
+    <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="License.md" Pack="true" PackagePath="" />
     <None Include="..\Readme.md" Link="Readme.md" />
     <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
   </ItemGroup>

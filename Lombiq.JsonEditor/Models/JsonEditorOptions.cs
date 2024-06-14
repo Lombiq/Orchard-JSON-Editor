@@ -46,7 +46,7 @@ public class JsonEditorOptions
         set => ModeString = GetModeString(value);
     }
 
-    public IEnumerable<string> Modes { get; set; } = new[] { "tree", "view", "form", "code", "text", "preview" };
+    public IEnumerable<string> Modes { get; set; } = ["tree", "view", "form", "code", "text", "preview"];
 
     /// <summary>
     /// Gets or sets the JSON Schema to validate against. A JSON schema describes the structure that a JSON object must
@@ -117,8 +117,8 @@ public class JsonEditorOptions
     public static JsonEditorOptions GetSample(IHtmlLocalizer localizer) =>
         new()
         {
-            Templates = new[]
-            {
+            Templates =
+            [
                 new JsonEditorTemplate
                 {
                     Field = "aTechnicalNameThatHasToBeUnique",
@@ -128,6 +128,6 @@ public class JsonEditorOptions
                         .Value,
                     Value = new { YourObject = "goes here" },
                 },
-            },
+            ],
         };
 }

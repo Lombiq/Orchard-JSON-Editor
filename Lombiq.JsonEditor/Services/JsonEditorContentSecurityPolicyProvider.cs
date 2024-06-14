@@ -1,4 +1,4 @@
-﻿using Lombiq.HelpfulLibraries.AspNetCore.Security;
+using Lombiq.HelpfulLibraries.AspNetCore.Security;
 using Lombiq.JsonEditor.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +18,7 @@ public class JsonEditorContentSecurityPolicyProvider : ResourceManagerContentSec
 {
     protected override string ResourceType => "script";
     protected override string ResourceName => ResourceNames.Library;
-    protected override IReadOnlyCollection<string> DirectiveNameChain { get; } = new[] { WorkerSrc, ScriptSrc };
+    protected override IReadOnlyCollection<string> DirectiveNameChain { get; } = [WorkerSrc, ScriptSrc];
     protected override string DirectiveValue => $"{Blob} {Data}";
 
     protected override ValueTask ThenUpdateAsync(
