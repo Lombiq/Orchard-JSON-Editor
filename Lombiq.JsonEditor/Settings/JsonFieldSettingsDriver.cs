@@ -4,6 +4,7 @@ using Microsoft.Extensions.Localization;
 using OrchardCore.ContentManagement.Metadata.Builders;
 using OrchardCore.ContentManagement.Metadata.Models;
 using OrchardCore.ContentTypes.Editors;
+using OrchardCore.DisplayManagement.Handlers;
 using OrchardCore.DisplayManagement.Views;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -25,8 +26,7 @@ public class JsonFieldSettingsDriver : ContentPartFieldDefinitionDisplayDriver<J
         ContentPartFieldDefinition model,
         UpdatePartFieldEditorContext context)
     {
-        var settings = new JsonFieldSettings();
-        await context.Updater.TryUpdateModelAsync(settings, Prefix);
+        var settings = await context.CreateModelMaybeAsync<JsonFieldSettings>(Prefix);
 
         try
         {
