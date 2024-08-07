@@ -4,6 +4,7 @@ using Lombiq.JsonEditor.ViewModels;
 using Microsoft.Extensions.Localization;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.ContentManagement.Display.Models;
+using OrchardCore.DisplayManagement.Handlers;
 using OrchardCore.DisplayManagement.ModelBinding;
 using OrchardCore.DisplayManagement.Views;
 using System.Threading.Tasks;
@@ -37,9 +38,7 @@ public class JsonFieldDisplayDriver : ContentFieldDisplayDriver<JsonField>
 
     public override async Task<IDisplayResult> UpdateAsync(JsonField field, IUpdateModel updater, UpdateFieldEditorContext context)
     {
-        var model = new EditJsonFieldViewModel();
-
-        if (!await updater.TryUpdateModelAsync(model, Prefix)) return await EditAsync(field, context);
+        var model = await context.CreateModelAsync<EditJsonFieldViewModel>(Prefix);
 
         if (JsonHelpers.ValidateJsonIfNotNull(model.Value) == false)
         {
