@@ -5,7 +5,6 @@ using Microsoft.Extensions.Localization;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.ContentManagement.Display.Models;
 using OrchardCore.DisplayManagement.Handlers;
-using OrchardCore.DisplayManagement.ModelBinding;
 using OrchardCore.DisplayManagement.Views;
 using System.Threading.Tasks;
 
@@ -36,13 +35,13 @@ public class JsonFieldDisplayDriver : ContentFieldDisplayDriver<JsonField>
             model.PartFieldDefinition = context.PartFieldDefinition;
         });
 
-    public override async Task<IDisplayResult> UpdateAsync(JsonField field, IUpdateModel updater, UpdateFieldEditorContext context)
+    public override async Task<IDisplayResult> UpdateAsync(JsonField field, UpdateFieldEditorContext context)
     {
         var model = await context.CreateModelAsync<EditJsonFieldViewModel>(Prefix);
 
         if (JsonHelpers.ValidateJsonIfNotNull(model.Value) == false)
         {
-            updater.ModelState.AddModelError(Prefix, T["The input isn't a valid JSON entity."]);
+            context.Updater.ModelState.AddModelError(Prefix, T["The input isn't a valid JSON entity."]);
         }
         else
         {
