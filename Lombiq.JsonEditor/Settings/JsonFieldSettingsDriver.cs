@@ -18,7 +18,7 @@ public class JsonFieldSettingsDriver : ContentPartFieldDefinitionDisplayDriver<J
 
     public JsonFieldSettingsDriver(IStringLocalizer<JsonFieldSettingsDriver> stringLocalizer) => T = stringLocalizer;
 
-    public override IDisplayResult Edit(ContentPartFieldDefinition model) =>
+    public override IDisplayResult Edit(ContentPartFieldDefinition model, BuildEditorContext context) =>
         Initialize<JsonFieldSettings>($"{nameof(JsonFieldSettings)}_Edit", model.CopySettingsTo)
             .PlaceInContent();
 
@@ -26,7 +26,7 @@ public class JsonFieldSettingsDriver : ContentPartFieldDefinitionDisplayDriver<J
         ContentPartFieldDefinition model,
         UpdatePartFieldEditorContext context)
     {
-        var settings = await context.CreateModelMaybeAsync<JsonFieldSettings>(Prefix);
+        var settings = await context.CreateModelAsync<JsonFieldSettings>(Prefix);
 
         try
         {
@@ -40,6 +40,6 @@ public class JsonFieldSettingsDriver : ContentPartFieldDefinitionDisplayDriver<J
                 T["The input isn't a valid {0} object.", nameof(JsonEditorOptions)]);
         }
 
-        return Edit(model);
+        return await EditAsync(model, context);
     }
 }
