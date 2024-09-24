@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Lombiq.JsonEditor.Drivers;
 
-public class JsonFieldDisplayDriver : ContentFieldDisplayDriver<JsonField>
+public sealed class JsonFieldDisplayDriver : ContentFieldDisplayDriver<JsonField>
 {
     private readonly IStringLocalizer T;
 

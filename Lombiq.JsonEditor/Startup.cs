@@ -16,7 +16,7 @@ using OrchardCore.ResourceManagement;
 
 namespace Lombiq.JsonEditor;
 
-public class Startup : StartupBase
+public sealed class Startup : StartupBase
 {
     public override void ConfigureServices(IServiceCollection services)
     {
@@ -29,7 +29,7 @@ public class Startup : StartupBase
 }
 
 [Feature(FeatureIds.ContentEditor)]
-public class ContentEditorStartup : StartupBase
+public sealed class ContentEditorStartup : StartupBase
 {
     private readonly AdminOptions _adminOptions;
 

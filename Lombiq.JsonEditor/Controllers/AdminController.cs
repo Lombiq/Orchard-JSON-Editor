@@ -27,7 +27,7 @@ using System.Threading.Tasks;
 
 namespace Lombiq.JsonEditor.Controllers;
 
-public class AdminController : Controller
+public sealed class AdminController : Controller
 {
     private static readonly JsonMergeSettings _updateJsonMergeSettings = new()
     {
