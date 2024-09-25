@@ -1,17 +1,16 @@
+using Lombiq.HelpfulLibraries.Common.Utilities;
 using Lombiq.JsonEditor.Fields;
 using Lombiq.JsonEditor.ViewModels;
 using Microsoft.Extensions.Localization;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.ContentManagement.Display.Models;
-using OrchardCore.DisplayManagement.ModelBinding;
+using OrchardCore.DisplayManagement.Handlers;
 using OrchardCore.DisplayManagement.Views;
 using System.Threading.Tasks;
 
 namespace Lombiq.JsonEditor.Drivers;
 
-public class JsonFieldDisplayDriver : ContentFieldDisplayDriver<JsonField>
+public sealed class JsonFieldDisplayDriver : ContentFieldDisplayDriver<JsonField>
 {
     private readonly IStringLocalizer T;
 
@@ -36,15 +35,13 @@ public class JsonFieldDisplayDriver : ContentFieldDisplayDriver<JsonField>
             model.PartFieldDefinition = context.PartFieldDefinition;
         });
 
-    public override async Task<IDisplayResult> UpdateAsync(JsonField field, IUpdateModel updater, UpdateFieldEditorContext context)
+    public override async Task<IDisplayResult> UpdateAsync(JsonField field, UpdateFieldEditorContext context)
     {
-        var model = new EditJsonFieldViewModel();
+        var model = await context.CreateModelAsync<EditJsonFieldViewModel>(Prefix);
 
-        if (!await updater.TryUpdateModelAsync(model, Prefix)) return await EditAsync(field, context);
-
-        if (!TryParse(model.Value))
+        if (JsonHelpers.ValidateJsonIfNotNull(model.Value) == false)
         {
-            updater.ModelState.AddModelError(Prefix, T["The input isn't a valid JSON entity."]);
+            context.Updater.ModelState.AddModelError(Prefix, T["The input isn't a valid JSON entity."]);
         }
         else
         {
@@ -52,18 +49,5 @@ public class JsonFieldDisplayDriver : ContentFieldDisplayDriver<JsonField>
         }
 
         return await EditAsync(field, context);
-    }
-
-    private static bool TryParse(string value)
-    {
-        try
-        {
-            JObject.Parse(value);
-            return true;
-        }
-        catch (JsonException)
-        {
-            return false;
-        }
     }
 }

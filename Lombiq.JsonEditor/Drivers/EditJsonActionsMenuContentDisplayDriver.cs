@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Lombiq.JsonEditor.Drivers;
 
-public class EditJsonActionsMenuContentDisplayDriver : ContentDisplayDriver
+public sealed class EditJsonActionsMenuContentDisplayDriver : ContentDisplayDriver
 {
     private readonly IAuthorizationService _authorizationService;
     private readonly IHttpContextAccessor _hca;

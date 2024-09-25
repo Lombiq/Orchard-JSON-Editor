@@ -1,34 +1,36 @@
 using Lombiq.JsonEditor.Fields;
 using Lombiq.JsonEditor.Models;
 using Microsoft.Extensions.Localization;
-using Newtonsoft.Json;
+using OrchardCore.ContentManagement.Metadata.Builders;
 using OrchardCore.ContentManagement.Metadata.Models;
 using OrchardCore.ContentTypes.Editors;
+using OrchardCore.DisplayManagement.Handlers;
 using OrchardCore.DisplayManagement.Views;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
 namespace Lombiq.JsonEditor.Settings;
 
-public class JsonFieldSettingsDriver : ContentPartFieldDefinitionDisplayDriver<JsonField>
+public sealed class JsonFieldSettingsDriver : ContentPartFieldDefinitionDisplayDriver<JsonField>
 {
     private readonly IStringLocalizer T;
 
     public JsonFieldSettingsDriver(IStringLocalizer<JsonFieldSettingsDriver> stringLocalizer) => T = stringLocalizer;
 
-    public override IDisplayResult Edit(ContentPartFieldDefinition model) =>
-        Initialize<JsonFieldSettings>($"{nameof(JsonFieldSettings)}_Edit", model.PopulateSettings)
-            .Location("Content");
+    public override IDisplayResult Edit(ContentPartFieldDefinition model, BuildEditorContext context) =>
+        Initialize<JsonFieldSettings>($"{nameof(JsonFieldSettings)}_Edit", model.CopySettingsTo)
+            .PlaceInContent();
 
     public override async Task<IDisplayResult> UpdateAsync(
         ContentPartFieldDefinition model,
         UpdatePartFieldEditorContext context)
     {
-        var settings = new JsonFieldSettings();
-        await context.Updater.TryUpdateModelAsync(settings, Prefix);
+        var settings = await context.CreateModelAsync<JsonFieldSettings>(Prefix);
 
         try
         {
-            JsonConvert.DeserializeObject<JsonEditorOptions>(settings.JsonEditorOptions);
+            JsonNode.Parse(settings.JsonEditorOptions).ToObject<JsonEditorOptions>();
             context.Builder.WithSettings(settings);
         }
         catch (JsonException)
@@ -38,6 +40,6 @@ public class JsonFieldSettingsDriver : ContentPartFieldDefinitionDisplayDriver<J
                 T["The input isn't a valid {0} object.", nameof(JsonEditorOptions)]);
         }
 
-        return Edit(model);
+        return await EditAsync(model, context);
     }
 }

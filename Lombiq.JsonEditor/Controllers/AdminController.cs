@@ -1,31 +1,39 @@
-using AngleSharp.Common;
 using Lombiq.HelpfulLibraries.OrchardCore.Contents;
 using Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
-using Lombiq.HelpfulLibraries.OrchardCore.Mvc;
+using Lombiq.HelpfulLibraries.OrchardCore.Validation;
 using Lombiq.JsonEditor.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Localization;
-using Newtonsoft.Json;
+using OrchardCore.Admin;
 using OrchardCore.ContentManagement;
+using OrchardCore.ContentManagement.Handlers;
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.Contents;
-using OrchardCore.Contents.Controllers;
 using OrchardCore.DisplayManagement;
 using OrchardCore.DisplayManagement.Layout;
 using OrchardCore.DisplayManagement.Notify;
 using OrchardCore.DisplayManagement.Title;
 using OrchardCore.Title.ViewModels;
 using System;
+using System.Linq;
+using System.Net;
 using System.Security.Claims;
+using System.Text.Json;
+using System.Text.Json.Settings;
 using System.Threading.Tasks;
 
 namespace Lombiq.JsonEditor.Controllers;
 
-public class AdminController : Controller
+public sealed class AdminController : Controller
 {
+    private static readonly JsonMergeSettings _updateJsonMergeSettings = new()
+    {
+        MergeArrayHandling = MergeArrayHandling.Replace,
+    };
+
     private readonly IAuthorizationService _authorizationService;
     private readonly IContentManager _contentManager;
     private readonly IContentDefinitionManager _contentDefinitionManager;
@@ -33,7 +41,6 @@ public class AdminController : Controller
     private readonly INotifier _notifier;
     private readonly IPageTitleBuilder _pageTitleBuilder;
     private readonly IShapeFactory _shapeFactory;
-    private readonly Lazy<ApiController> _contentApiControllerLazy;
     private readonly IStringLocalizer<AdminController> T;
     private readonly IHtmlLocalizer<AdminController> H;
 
@@ -43,8 +50,7 @@ public class AdminController : Controller
         INotifier notifier,
         IPageTitleBuilder pageTitleBuilder,
         IShapeFactory shapeFactory,
-        IOrchardServices<AdminController> services,
-        Lazy<ApiController> contentApiControllerLazy)
+        IOrchardServices<AdminController> services)
     {
         _authorizationService = services.AuthorizationService.Value;
         _contentManager = services.ContentManager.Value;
@@ -53,12 +59,11 @@ public class AdminController : Controller
         _notifier = notifier;
         _pageTitleBuilder = pageTitleBuilder;
         _shapeFactory = shapeFactory;
-        _contentApiControllerLazy = contentApiControllerLazy;
         T = services.StringLocalizer.Value;
         H = services.HtmlLocalizer.Value;
     }
 
-    [AdminRoute("Contents/ContentItems/{contentItemId}/Edit/Json")]
+    [Admin("Contents/ContentItems/{contentItemId}/Edit/Json")]
     public async Task<IActionResult> Edit(string contentItemId)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -80,7 +85,7 @@ public class AdminController : Controller
         await _layoutAccessor.AddShapeToZoneAsync("Title", titleShape);
 
         var definition = await _contentDefinitionManager.GetTypeDefinitionAsync(contentItem.ContentType);
-        return View(new EditContentItemViewModel(contentItem, definition, JsonConvert.SerializeObject(contentItem)));
+        return View(new EditContentItemViewModel(contentItem, definition, JsonSerializer.Serialize(contentItem)));
     }
 
     [ValidateAntiForgeryToken]
@@ -96,7 +101,7 @@ public class AdminController : Controller
 
         if (string.IsNullOrWhiteSpace(contentItemId) ||
             string.IsNullOrWhiteSpace(json) ||
-            JsonConvert.DeserializeObject<ContentItem>(json) is not { } contentItem)
+            JsonSerializer.Deserialize<ContentItem>(json) is not { } contentItem)
         {
             return NotFound();
         }
@@ -136,28 +141,8 @@ public class AdminController : Controller
     private Task<bool> CanEditAsync(ContentItem contentItem) =>
         _authorizationService.AuthorizeAsync(User, CommonPermissions.EditContent, contentItem);
 
-    private async Task<IActionResult> UpdateContentAsync(ContentItem contentItem, bool isDraft)
-    {
-        // The Content API Controller requires the AccessContentApi permission. As this isn't an external API request it
-        // doesn't make sense to require this permission. So we create a temporary claims principal and explicitly grant
-        // the permission.
-        var currentUser = User;
-        HttpContext.User = new ClaimsPrincipal(new ClaimsIdentity(User.Claims.Concat(Permissions.AccessContentApi)));
-
-        try
-        {
-            // Here the API controller is called directly. The behavior is the same as if we sent a POST request using an
-            // HTTP client (except the permission bypass above), but it's faster and more resource-efficient.
-            var contentApiController = _contentApiControllerLazy.Value;
-            contentApiController.ControllerContext.HttpContext = HttpContext;
-            return await contentApiController.Post(contentItem, isDraft);
-        }
-        finally
-        {
-            // Ensure that the original claims principal is restored, just in case.
-            HttpContext.User = currentUser;
-        }
-    }
+    private Task<IActionResult> UpdateContentAsync(ContentItem contentItem, bool isDraft) =>
+        PostContentAsync(contentItem, isDraft);
 
     private static bool IsContinue(string submitString) =>
         submitString?.EndsWithOrdinalIgnoreCase("AndContinue") == true;
@@ -166,4 +151,81 @@ public class AdminController : Controller
         string.IsNullOrWhiteSpace(contentItem.DisplayText)
             ? contentItem.ContentType
             : $"\"{contentItem.DisplayText}\"";
+
+    // Based on the OrchardCore.Contents.Controllers.ApiController.Post action that was deleted in
+    // https://github.com/OrchardCMS/OrchardCore/commit/d524386b2f792f35773324ae482247e80a944266 to replace with minimal
+    // APIs that can't be reused the same way.
+    private async Task<IActionResult> PostContentAsync(ContentItem model, bool draft)
+    {
+        // It is really important to keep the proper method calls order with the ContentManager
+        // so that all event handlers gets triggered in the right sequence.
+
+        if (await _contentManager.GetAsync(model.ContentItemId, VersionOptions.DraftRequired) is { } contentItem)
+        {
+            if (!await _authorizationService.AuthorizeAsync(User, CommonPermissions.EditContent, contentItem))
+            {
+                return this.ChallengeOrForbid("Api");
+            }
+
+            contentItem.Merge(model, _updateJsonMergeSettings);
+
+            await _contentManager.UpdateAsync(contentItem);
+            var result = await _contentManager.ValidateAsync(contentItem);
+            if (CheckContentValidationResult(result) is { } problem) return problem;
+        }
+        else
+        {
+            if (string.IsNullOrEmpty(model.ContentType) || await _contentDefinitionManager.GetTypeDefinitionAsync(model.ContentType) == null)
+            {
+                return BadRequest();
+            }
+
+            contentItem = await _contentManager.NewAsync(model.ContentType);
+            contentItem.Owner = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (!await _authorizationService.AuthorizeAsync(User, CommonPermissions.PublishContent, contentItem))
+            {
+                return this.ChallengeOrForbid("Api");
+            }
+
+            contentItem.Merge(model);
+
+            var result = await _contentManager.UpdateValidateAndCreateAsync(contentItem, VersionOptions.Draft);
+            if (CheckContentValidationResult(result) is { } problem) return problem;
+        }
+
+        if (draft)
+        {
+            await _contentManager.SaveDraftAsync(contentItem);
+        }
+        else
+        {
+            await _contentManager.PublishAsync(contentItem);
+        }
+
+        return Ok(contentItem);
+    }
+
+    private ActionResult CheckContentValidationResult(ContentValidateResult result)
+    {
+        if (!result.Succeeded)
+        {
+            // Add the validation results to the ModelState to present the errors as part of the response.
+            result.AddValidationErrorsToModelState(ModelState);
+        }
+
+        // We check the model state after calling all handlers because they trigger WF content events so, even they are not
+        // intended to add model errors (only drivers), a WF content task may be executed inline and add some model errors.
+        if (!ModelState.IsValid)
+        {
+            return ValidationProblem(new ValidationProblemDetails(ModelState)
+            {
+                Title = T["One or more validation errors occurred."],
+                Detail = string.Join(", ", ModelState.Values.SelectMany(state => state.Errors.Select(error => error.ErrorMessage))),
+                Status = (int)HttpStatusCode.BadRequest,
+            });
+        }
+
+        return null;
+    }
 }

@@ -6,7 +6,7 @@
     var settings = Model.PartFieldDefinition.GetSettings<JsonFieldSettings>();
     var options = string.IsNullOrWhiteSpace(settings.JsonEditorOptions)
         ? JsonEditorOptions.GetSample(T)
-        : JsonConvert.DeserializeObject<JsonEditorOptions>(settings.JsonEditorOptions) ?? JsonEditorOptions.GetSample(T);
+        : JsonSerializer.Deserialize<JsonEditorOptions>(settings.JsonEditorOptions) ?? JsonEditorOptions.GetSample(T);
 }
 
 <div class="form-group">
