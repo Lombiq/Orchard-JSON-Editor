@@ -25,7 +25,7 @@ public class ResourceManagementOptionsConfiguration : IConfigureOptions<Resource
 
         _manifest
             .DefineStyle(Style)
-            .SetUrl(Module + "css/json-editor.min.css", Module + "css/json-editor.css")
+            .SetUrl(Module + "css/json-editor.css")
             .SetVersion("1.0.0");
     }
 
