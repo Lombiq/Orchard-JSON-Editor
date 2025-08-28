@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   jsoneditor:
-    specifier: 10.3.0
-    version: 10.3.0
+    specifier: 10.4.0
+    version: 10.4.0
 
 packages:
 
@@ -53,8 +53,8 @@ packages:
     resolution: {integrity: sha512-1QoztHPsMQqhDq0hlXY5ZqcEdUzxQEIxgFkKl4WUp2pgShObl+9ovi4kRh2TfvAfxAoHOJ9vIMEqk3k4iex7tg==}
     dev: false
 
-  /jsoneditor@10.3.0:
-    resolution: {integrity: sha512-KYuX34Tgze1SU3rIrwF0Y3fewrTYq1dSLHT2FXLPIUhFObmtSD+NML2hqXX7rtwGs2dfLUwsK8gn3WbhFT5CtQ==}
+  /jsoneditor@10.4.0:
+    resolution: {integrity: sha512-KNk8pWYSNEfi/a6joyTB1K8OdoxiG1451XtGSe7JdO427ISXnI3PhI44mQUmL2tN3avWKA2F/qhD+TUUhSsThw==}
     dependencies:
       ace-builds: 1.37.1
       ajv: 6.12.6
