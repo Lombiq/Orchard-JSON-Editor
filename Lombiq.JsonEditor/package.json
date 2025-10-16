@@ -3,5 +3,5 @@
   "dependencies": {
     "jsoneditor": "10.4.1"
   },
-  "packageManager": "pnpm@8.15.9"
+  "packageManager": "pnpm@10.18.3"
 }
