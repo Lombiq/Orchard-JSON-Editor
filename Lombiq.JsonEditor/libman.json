@@ -1,10 +1,10 @@
 {
   "version": "3.0",
   "defaultProvider": "jsdelivr",
+  "defaultDestination": "wwwroot/vendors/[Name]",
   "libraries": [
     {
       "library": "jsoneditor@10.4.2",
-      "destination": "wwwroot/vendors/jsoneditor",
       "files": [ "dist/*.js" ]
     }
   ]
