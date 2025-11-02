@@ -18,12 +18,12 @@ public partial class ResourceManagementOptionsConfiguration : IConfigureOptions<
         _manifest
             .DefineScript(Library)
             .SetUrl(Vendors + "jsoneditor/jsoneditor.min.js", Vendors + "jsoneditor/jsoneditor.js")
-            .SetVersion(LibMan_jsoneditor);
+            .SetVersion(LibManVersions.Jsoneditor);
 
         _manifest
             .DefineStyle(Library)
             .SetUrl(Vendors + "jsoneditor/jsoneditor.min.css", Vendors + "jsoneditor/jsoneditor.css")
-            .SetVersion(LibMan_jsoneditor);
+            .SetVersion(LibManVersions.Jsoneditor);
 
         _manifest
             .DefineStyle(Style)
