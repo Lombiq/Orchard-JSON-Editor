@@ -1,10 +1,12 @@
+using Lombiq.HelpfulLibraries.Attributes;
 using Microsoft.Extensions.Options;
 using OrchardCore.ResourceManagement;
 using static Lombiq.JsonEditor.Constants.ResourceNames;
 
 namespace Lombiq.JsonEditor;
 
-public class ResourceManagementOptionsConfiguration : IConfigureOptions<ResourceManagementOptions>
+[LibManVersions]
+public partial class ResourceManagementOptionsConfiguration : IConfigureOptions<ResourceManagementOptions>
 {
     private const string Module = "~/Lombiq.JsonEditor/";
     private const string Vendors = Module + "vendors/";
@@ -15,13 +17,13 @@ public class ResourceManagementOptionsConfiguration : IConfigureOptions<Resource
     {
         _manifest
             .DefineScript(Library)
-            .SetUrl(Vendors + "jsoneditor/jsoneditor.min.js", Vendors + "jsoneditor/jsoneditor.js")
-            .SetVersion("9.5.0");
+            .SetUrl(Vendors + "jsoneditor/dist/jsoneditor.min.js", Vendors + "jsoneditor/dist/jsoneditor.js")
+            .SetVersion(LibManVersions.Jsoneditor);
 
         _manifest
             .DefineStyle(Library)
-            .SetUrl(Vendors + "jsoneditor/jsoneditor.min.css", Vendors + "jsoneditor/jsoneditor.css")
-            .SetVersion("9.5.0");
+            .SetUrl(Vendors + "jsoneditor/dist/jsoneditor.min.css", Vendors + "jsoneditor/dist/jsoneditor.css")
+            .SetVersion(LibManVersions.Jsoneditor);
 
         _manifest
             .DefineStyle(Style)

@@ -1,0 +1,11 @@
+{
+  "version": "3.0",
+  "defaultProvider": "jsdelivr",
+  "defaultDestination": "wwwroot/vendors/[Name]",
+  "libraries": [
+    {
+      "library": "jsoneditor@10.4.2",
+      "files": [ "dist/img/jsoneditor-icons.svg", "dist/*.js", "dist/*.css" ]
+    }
+  ]
+}

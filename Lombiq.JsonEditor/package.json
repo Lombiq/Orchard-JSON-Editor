@@ -1,7 +1,0 @@
-{
-  "private": true,
-  "dependencies": {
-    "jsoneditor": "10.4.2"
-  },
-  "packageManager": "pnpm@9.15.9"
-}
