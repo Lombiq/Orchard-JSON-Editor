@@ -53,13 +53,6 @@ Clicking on it encodes the content item as JSON and displays it in the JSON edit
 
 This still requires edit permission to the content item, so the security is the same as the regular content item editor. Clicking _Publish_ deserializes the received JSON into a ContentItem and publishes it.
 
-## Dependencies
-
-This module has the following dependencies:
-
-- [Lombiq Helpful Libraries for Orchard Core](https://github.com/Lombiq/Helpful-Libraries)
-- [Lombiq Node.js Extensions](https://gihub.com/Lombiq/NodeJs-Extensions)
-
 ## Contributing and support
 
 Bug reports, feature requests, comments, questions, code contributions and love letters are warmly welcome. You can send them to us via GitHub issues and pull requests. Please adhere to our [open-source guidelines](https://lombiq.com/open-source-guidelines) while doing so.
