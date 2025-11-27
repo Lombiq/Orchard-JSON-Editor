@@ -1,21 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-    <DefaultItemExcludes>$(DefaultItemExcludes);.git*</DefaultItemExcludes>
-  </PropertyGroup>
+  <Import Project="../../../../tools/Lombiq.MSBuild.Targets/Lombiq.MSBuild.LibMan.Targets/Lombiq.MSBuild.LibMan.Targets.props"
+          Condition="'$(NuGetBuild)' != 'true' "/>
 
   <PropertyGroup>
     <Title>Lombiq JSON Editor for Orchard Core</Title>
-    <Authors>Lombiq Technologies</Authors>
     <Copyright>Copyright © 2021, Lombiq Technologies Ltd.</Copyright>
     <Description>Lombiq JSON Editor for Orchard Core: Orchard Core module for displaying a JSON Editor like on (https://jsoneditoronline.org/. See the project website for detailed documentation.</Description>
-    <PackageIcon>NuGetIcon.png</PackageIcon>
     <PackageTags>OrchardCore;Lombiq;AspNetCore;JSONEditor</PackageTags>
     <RepositoryUrl>https://github.com/Lombiq/Orchard-JSON-Editor</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Lombiq/Orchard-JSON-Editor</PackageProjectUrl>
-    <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,11 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="OrchardCore.Module.Targets" Version="2.1.0" />
     <PackageReference Include="OrchardCore.Contents" Version="2.1.0" />
     <PackageReference Include="OrchardCore.ContentManagement" Version="2.1.0" />
     <PackageReference Include="OrchardCore.ContentTypes.Abstractions" Version="2.1.0" />
