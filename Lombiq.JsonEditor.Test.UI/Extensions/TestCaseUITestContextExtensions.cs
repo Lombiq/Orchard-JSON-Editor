@@ -17,10 +17,10 @@ public static class TestCaseUITestContextExtensions
     private const string TestValue = "testValue";
     private const string TestAuthor = "Custom Test Author";
 
-    private static readonly By ObjectByXPath = By.XPath($"//div[@class='jsoneditor-readonly' and contains(text(),'object')]");
-    private static readonly By ObjectCountByXPath = By.XPath($"//div[@class='jsoneditor-value jsoneditor-object' and contains(text(),'{{2}}')]");
-    private static readonly By ArrayByXPath = By.XPath($"//div[@class='jsoneditor-field' and contains(text(),'printThese')]");
-    private static readonly By ArrayCountByXPath = By.XPath($"//div[@class='jsoneditor-value jsoneditor-array' and contains(text(),'[2]')]");
+    private static readonly By ObjectByXPath = By.XPath("//div[@class='jsoneditor-readonly' and contains(text(),'object')]");
+    private static readonly By ObjectCountByXPath = By.XPath("//div[@class='jsoneditor-value jsoneditor-object' and contains(text(),'{2}')]");
+    private static readonly By ArrayByXPath = By.XPath("//div[@class='jsoneditor-field' and contains(text(),'printThese')]");
+    private static readonly By ArrayCountByXPath = By.XPath("//div[@class='jsoneditor-value jsoneditor-array' and contains(text(),'[2]')]");
     private static readonly By FieldByXPath = By.XPath($"//div[@class='jsoneditor-field' and contains(text(), '{TestField}')]");
 
     public static async Task TestJsonEditorBehaviorAsync(this UITestContext context)
@@ -32,7 +32,7 @@ public static class TestCaseUITestContextExtensions
         // Checking if the sample item is displayed correctly.
         await context.GoToContentItemByIdAsync(SampleContentItemId);
 
-        context.Exists(By.XPath($"//div[contains(text(),'These are coming from the JSON field:')]"));
+        context.Exists(By.XPath("//div[contains(text(),'These are coming from the JSON field:')]"));
         context.Exists(By.XPath($"//li[contains(text(),'{HelloValue}')]"));
         context.Exists(By.XPath($"//li[contains(text(),'{WorldValue}')]"));
 
@@ -41,13 +41,14 @@ public static class TestCaseUITestContextExtensions
 
         // Testing if input is saved.
         await context.ClickReliablyOnAsync(
-            By.XPath($"//tr[contains(@class,'jsoneditor-expandable jsoneditor-collapsed')]" +
+            By.XPath(
+                "//tr[contains(@class,'jsoneditor-expandable jsoneditor-collapsed')]" +
                 "/td/button[@class='jsoneditor-button jsoneditor-contextmenu-button']"));
 
-        await context.ClickReliablyOnAsync(By.XPath($"//div[contains(text(),'Append')]"));
+        await context.ClickReliablyOnAsync(By.XPath("//div[contains(text(),'Append')]"));
 
-        context.Get(By.XPath($"//div[@class='jsoneditor-field jsoneditor-empty']")).FillInWith(TestField);
-        context.Get(By.XPath($"//div[@class='jsoneditor-value jsoneditor-string jsoneditor-empty']")).FillInWith(TestValue);
+        context.Get(By.XPath("//div[@class='jsoneditor-field jsoneditor-empty']")).FillInWith(TestField);
+        context.Get(By.XPath("//div[@class='jsoneditor-value jsoneditor-string jsoneditor-empty']")).FillInWith(TestValue);
         await context.ClickPublishAsync();
 
         // Checking if the sample item is displayed correctly in all tree style mode.
@@ -90,14 +91,14 @@ public static class TestCaseUITestContextExtensions
     }
 
     private static Task ClickOnExpandAllAsync(this UITestContext context) =>
-        context.ClickReliablyOnAsync(By.XPath($"//button[@class='jsoneditor-expand-all']"));
+        context.ClickReliablyOnAsync(By.XPath("//button[@class='jsoneditor-expand-all']"));
 
     private static Task ClickOnCollapseAllAsync(this UITestContext context) =>
-        context.ClickReliablyOnAsync(By.XPath($"//button[@class='jsoneditor-collapse-all']"));
+        context.ClickReliablyOnAsync(By.XPath("//button[@class='jsoneditor-collapse-all']"));
 
     private static async Task SwitchToModeAsync(this UITestContext context, string editorName)
     {
-        await context.ClickReliablyOnAsync(By.XPath($"//button[@class='jsoneditor-modes jsoneditor-separator']"));
+        await context.ClickReliablyOnAsync(By.XPath("//button[@class='jsoneditor-modes jsoneditor-separator']"));
         await context.ClickReliablyOnAsync(By.XPath($"//div[@class='jsoneditor-text' and contains(text(),'{editorName}')]"));
     }
 
@@ -140,7 +141,7 @@ public static class TestCaseUITestContextExtensions
     {
         // This field is hidden, but its content reflects what's in the editor.
         var editorContent = JsonNode
-            .Parse(context.Get(By.XPath($"//input[@class='jsonEditor__input']").OfAnyVisibility())
+            .Parse(context.Get(By.XPath("//input[@class='jsonEditor__input']").OfAnyVisibility())
             .GetValue());
 
         ((string)editorContent["printThese"][0]).ShouldBe(HelloValue);
