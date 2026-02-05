@@ -18,7 +18,7 @@ public static class TestCaseUITestContextExtensions
     private const string TestAuthor = "Custom Test Author";
 
     private static readonly By ObjectByXPath = By.XPath("//div[@class='jsoneditor-readonly' and contains(text(),'object')]");
-    private static readonly By ObjectCountByXPath = By.XPath("//div[@class='jsoneditor-value jsoneditor-object' and contains(text(),'{{2}}')]");
+    private static readonly By ObjectCountByXPath = By.XPath("//div[@class='jsoneditor-value jsoneditor-object' and contains(text(),'{2}')]");
     private static readonly By ArrayByXPath = By.XPath("//div[@class='jsoneditor-field' and contains(text(),'printThese')]");
     private static readonly By ArrayCountByXPath = By.XPath("//div[@class='jsoneditor-value jsoneditor-array' and contains(text(),'[2]')]");
     private static readonly By FieldByXPath = By.XPath($"//div[@class='jsoneditor-field' and contains(text(), '{TestField}')]");
