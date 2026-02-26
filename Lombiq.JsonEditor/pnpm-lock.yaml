@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       jsoneditor:
-        specifier: 10.4.1
-        version: 10.4.1
+        specifier: 10.4.2
+        version: 10.4.2
 
 packages:
 
@@ -42,8 +42,8 @@ packages:
   json-source-map@0.6.1:
     resolution: {integrity: sha512-1QoztHPsMQqhDq0hlXY5ZqcEdUzxQEIxgFkKl4WUp2pgShObl+9ovi4kRh2TfvAfxAoHOJ9vIMEqk3k4iex7tg==}
 
-  jsoneditor@10.4.1:
-    resolution: {integrity: sha512-89ao8IOKq6yTY+LSNw7FHoqcNrkATZN9W1u476P9ofGLSN/V0l2Je0MWG8HrYKMYqriJEpXmlsGT1CZbr99GWg==}
+  jsoneditor@10.4.2:
+    resolution: {integrity: sha512-SQPCXlanU4PqdVsYuj2X7yfbLiiJYjklbksGfMKPsuwLhAIPxDlG43jYfXieGXvxpuq1fkw08YoRbkKXKabcLA==}
 
   jsonrepair@3.13.1:
     resolution: {integrity: sha512-WJeiE0jGfxYmtLwBTEk8+y/mYcaleyLXWaqp5bJu0/ZTSeG0KQq/wWQ8pmnkKenEdN6pdnn6QtcoSUkbqDHWNw==}
@@ -87,7 +87,7 @@ snapshots:
 
   json-source-map@0.6.1: {}
 
-  jsoneditor@10.4.1:
+  jsoneditor@10.4.2:
     dependencies:
       ace-builds: 1.43.3
       ajv: 6.12.6

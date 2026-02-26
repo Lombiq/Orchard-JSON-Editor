@@ -16,8 +16,7 @@ namespace Lombiq.JsonEditor.Services;
 /// </summary>
 public class JsonEditorContentSecurityPolicyProvider : ResourceManagerContentSecurityPolicyProvider
 {
-    protected override string ResourceType => "script";
-    protected override string ResourceName => ResourceNames.Library;
+    protected override IList<(string Type, string Name)> Resources { get; init; } = [("script", ResourceNames.Library)];
     protected override IReadOnlyCollection<string> DirectiveNameChain { get; } = [WorkerSrc, ScriptSrc];
     protected override string DirectiveValue => $"{Blob} {Data}";
 
