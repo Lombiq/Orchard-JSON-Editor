@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Lombiq.JsonEditor.Test.UI/Lombiq.JsonEditor.Tests.UI.csproj" />
+  <Project Path="Lombiq.JsonEditor/Lombiq.JsonEditor.csproj" />
+</Solution>
