@@ -12,7 +12,6 @@
     <DescriptionBody>Orchard Core module for displaying a JSON Editor like on (https://jsoneditoronline.org/.</DescriptionBody>
     <PackageTags>OrchardCore;Lombiq;AspNetCore;JSONEditor</PackageTags>
     <RepositoryUrl>https://github.com/Lombiq/Orchard-JSON-Editor</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/Lombiq/Orchard-JSON-Editor</PackageProjectUrl>
   </PropertyGroup>
 
   <Import Condition="'$(NuGetBuild)' != 'true'" Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.OrchardCore.Module.Sdk/Sdk/Import.targets" />
