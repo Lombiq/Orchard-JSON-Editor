@@ -4,7 +4,7 @@
   "defaultDestination": "wwwroot/vendors/[Name]",
   "libraries": [
     {
-      "library": "jsoneditor@10.4.2",
+      "library": "jsoneditor@10.4.3",
       "files": [ "dist/img/jsoneditor-icons.svg", "dist/*.js", "dist/*.css" ]
     }
   ]
