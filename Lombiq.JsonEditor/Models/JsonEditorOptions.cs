@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Localization;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json.Serialization;
 
@@ -108,11 +109,12 @@ public class JsonEditorOptions
         return this;
     }
 
+    [SuppressMessage(
+        "Globalization",
+        "CA1308:Normalize strings to uppercase",
+        Justification = "The mode names are all lower case strings.")]
     private static string GetModeString(JsonEditorMode mode) =>
-        // The mode names are all lower case strings.
-#pragma warning disable CA1308 // Normalize strings to uppercase.
         mode.ToString().ToLowerInvariant();
-#pragma warning restore CA1308 // Normalize strings to uppercase.
 
     public static JsonEditorOptions GetSample(IHtmlLocalizer localizer) =>
         new()

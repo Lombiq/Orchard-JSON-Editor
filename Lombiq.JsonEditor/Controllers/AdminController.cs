@@ -190,7 +190,7 @@ public sealed class AdminController : Controller
 
             contentItem.Merge(model);
 
-            var result = await _contentManager.UpdateValidateAndCreateAsync(contentItem, VersionOptions.Draft);
+            var result = await UpdateValidateAndCreateAsync(_contentManager, contentItem, VersionOptions.Draft);
             if (CheckContentValidationResult(result) is { } problem) return problem;
         }
 
@@ -204,6 +204,18 @@ public sealed class AdminController : Controller
         }
 
         return Ok(contentItem);
+    }
+
+    private static async Task<ContentValidateResult> UpdateValidateAndCreateAsync(
+        IContentManager contentManager,
+        ContentItem contentItem,
+        VersionOptions options)
+    {
+        await contentManager.UpdateAsync(contentItem);
+        var result = await contentManager.ValidateAsync(contentItem);
+        if (result.Succeeded) await contentManager.CreateAsync(contentItem, options);
+
+        return result;
     }
 
     private ActionResult CheckContentValidationResult(ContentValidateResult result)
